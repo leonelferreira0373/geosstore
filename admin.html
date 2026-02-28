@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <meta name="description" content="GEOSSTORE Master Analytics Dashboard">
+<title>GEOSSTORE Master Admin Dashboard</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#3B82F6", // Blue specific to the design
+                        "background-light": "#F3F4F6", // Light grey background
+                        "background-dark": "#111827", // Dark mode background
+                        "card-light": "#FFFFFF",
+                        "card-dark": "#1F2937",
+                        "text-light": "#1F2937",
+                        "text-dark": "#F3F4F6",
+                        "text-muted-light": "#6B7280",
+                        "text-muted-dark": "#9CA3AF",
+                    },
+                    fontFamily: {
+                        display: ["-apple-system", "BlinkMacSystemFont", "SF Pro Text", "Helvetica Neue", "sans-serif"],
+                        body: ["-apple-system", "BlinkMacSystemFont", "SF Pro Text", "Helvetica Neue", "sans-serif"],
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.75rem",
+                    },
+                },
+            },
+        };
+    </script>
+    <style>
+        body {
+            font-weight: 300; /* GLOBAL NO HEAVY FONT */
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+
+        .dark ::-webkit-scrollbar-thumb {
+            background: #475569;
+        }
+
+        .dark ::-webkit-scrollbar-thumb:hover {
+            background: #64748b;
+        }
+    </style>
+</head>
+
+<body
+    class="bg-background-light dark:bg-background-dark text-text-light dark:text-text-dark antialiased transition-colors duration-200">
+    <div class="flex h-screen overflow-hidden">
+        <aside
+            class="w-64 bg-card-light dark:bg-card-dark flex-shrink-0 border-r border-gray-200 dark:border-gray-700 flex flex-col justify-between hidden md:flex transition-colors duration-200 gap-y-4">
+            <div class="flex-1 overflow-y-auto w-[256px]">
+                <div class="h-16 flex items-center px-6 mb-6 mt-4">
+                    <div class="flex items-center gap-2 text-xl font-normal text-gray-800 dark:text-white">
+                        <div
+                            class="w-8 h-8 rounded-full border-2 border-gray-800 dark:border-white flex items-center justify-center">
+                            <div class="w-4 h-4 rounded-full border-2 border-gray-800 dark:border-white"></div>
+                        </div>
+                        GEOSSTORE
+                    </div>
+                </div>
+                <nav class="px-4 space-y-1">
+                    <a class="flex items-center px-4 py-3 text-primary bg-blue-50 dark:bg-blue-900/20 rounded-lg group transition-colors"
+                        href="#">
+                        <span class="material-icons-outlined mr-3">dashboard</span>
+                        <span class="font-normal">Dashboard</span>
+                    </a>
+                    <a class="flex items-center px-4 py-3 text-text-muted-light dark:text-text-muted-dark hover:bg-gray-50 dark:hover:bg-gray-700/50 hover:text-gray-900 dark:hover:text-white rounded-lg group transition-colors"
+                        href="feed.html">
+                        <span class="material-icons-outlined mr-3">store</span>
+                        <span class="font-normal">Live Feed</span>
+                    </a>
+                    <a class="flex items-center px-4 py-3 text-text-muted-light dark:text-text-muted-dark hover:bg-gray-50 dark:hover:bg-gray-700/50 hover:text-gray-900 dark:hover:text-white rounded-lg group transition-colors"
+                        href="#">
+                        <span class="material-icons-outlined mr-3">people</span>
+                        <span class="font-normal">Customers</span>
+                    </a>
+                    <a class="flex items-center px-4 py-3 text-text-muted-light dark:text-text-muted-dark hover:bg-gray-50 dark:hover:bg-gray-700/50 hover:text-gray-900 dark:hover:text-white rounded-lg group transition-colors"
+                        href="#">
+                        <span class="material-icons-outlined mr-3">shopping_bag</span>
+                        <span class="font-normal">Orders</span>
+                    </a>
+                    <a class="flex items-center px-4 py-3 text-text-muted-light dark:text-text-muted-dark hover:bg-gray-50 dark:hover:bg-gray-700/50 hover:text-gray-900 dark:hover:text-white rounded-lg group transition-colors"
+                        href="#">
+                        <span class="material-icons-outlined mr-3">inventory_2</span>
+                        <span class="font-normal truncate w-full min-w-0 max-w-[150px]">Products</span>
+                        <span class="font-normal">Product</span>
+                    </a>
+                    <a class="flex items-center px-4 py-3 text-text-muted-light dark:text-text-muted-dark hover:bg-gray-50 dark:hover:bg-gray-700/50 hover:text-gray-900 dark:hover:text-white rounded-lg group transition-colors"
+                        href="#">
+                        <span class="material-icons-outlined mr-3">bar_chart</span>
+                        <span class="font-normal">Sales Report</span>
+                    </a>
+                    <div class="pt-6 pb-2">
+                        <div class="border-t border-gray-100 dark:border-gray-700 mx-4"></div>
+                    </div>
+                    <a class="flex items-center px-4 py-3 text-text-muted-light dark:text-text-muted-dark hover:bg-gray-50 dark:hover:bg-gray-700/50 hover:text-gray-900 dark:hover:text-white rounded-lg group transition-colors"
+                        href="#">
+                        <span class="material-icons-outlined mr-3">settings</span>
+                        <span class="font-normal">Settings</span>
+                    </a>
+                    <a class="flex items-center px-4 py-3 text-text-muted-light dark:text-text-muted-dark hover:bg-gray-50 dark:hover:bg-gray-700/50 hover:text-gray-900 dark:hover:text-white rounded-lg group transition-colors"
+                        href="#">
+                        <span class="material-icons-outlined mr-3">logout</span>
+                        <span class="font-normal">Log out</span>
+                    </a>
+                </nav>
+            </div>
+            <div class="p-4 border-t border-gray-100 dark:border-gray-700">
+                <div class="flex items-center gap-3">
+                    <div
+                        class="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-white font-normal">
+                        A</div>
+                    <div class="flex-1 min-w-0">
+                        <p class="text-sm font-normal text-gray-900 dark:text-white truncate">Admin User</p>
+                        <p class="text-xs text-text-muted-light dark:text-text-muted-dark truncate">@admin_geo</p>
+                    </div>
+                </div>
+            </div>
+        </aside>
+        <main class="flex-1 overflow-x-hidden overflow-y-auto bg-background-light dark:bg-background-dark">
+            <header class="bg-card-light dark:bg-card-dark shadow-sm z-10 sticky top-0 transition-colors duration-200">
+                <div class="px-6 py-4 flex items-center justify-between">
+                    <div class="flex items-center flex-1">
+                        <div class="relative w-full max-w-md hidden md:block">
+                            <span class="absolute inset-y-0 left-0 flex items-center pl-3">
+                                <span class="material-icons-outlined text-gray-400">search</span>
+                            </span>
+                            <input
+                                class="w-full py-2 pl-10 pr-4 text-sm text-gray-700 dark:text-gray-200 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-colors"
+                                placeholder="Search products..." type="text" />
+                        </div>
+                        <button class="md:hidden p-2 text-gray-600 dark:text-gray-300">
+                            <span class="material-icons-outlined">menu</span>
+                        </button>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <button
+                            class="relative p-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors">
+                            <span class="material-icons-outlined">notifications</span>
+                            <span
+                                class="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full border-2 border-white dark:border-gray-800"></span>
+                        </button>
+                        <button class="p-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors"
+                            onclick="document.documentElement.classList.toggle('dark')">
+                            <span class="material-icons-outlined dark:hidden">dark_mode</span>
+                            <span class="material-icons-outlined hidden dark:block">light_mode</span>
+                        </button>
+                    </div>
+                </div>
+            </header>
+            <section class="p-8 md:p-10 space-y-8">
+                <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+                    <div>
+                        <h1 class="text-2xl font-normal text-gray-900 dark:text-white">Dashboard</h1>
+                        <p class="text-sm text-text-muted-light dark:text-text-muted-dark mt-1">Here's your analytic
+                            details</p>
+                    </div>
+                    <div
+                        class="flex items-center bg-card-light dark:bg-card-dark border border-gray-200 dark:border-gray-700 rounded-lg px-3 py-2 shadow-sm">
+                        <span class="material-icons-outlined text-gray-400 mr-2 text-sm">schedule</span>
+                        <span class="text-sm font-normal text-gray-700 dark:text-gray-300">Today</span>
+                        <span class="material-icons-outlined text-gray-400 ml-2 text-sm">expand_more</span>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <div class="lg:col-span-1 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div
+                            class="bg-card-light dark:bg-card-dark p-5 rounded-xl shadow-sm border border-gray-100 dark:border-gray-800 transition-colors">
+                            <p class="text-sm text-text-muted-light dark:text-text-muted-dark mb-1">Today's Sales</p>
+                            <h3 class="text-2xl font-normal text-gray-900 dark:text-white">$0.00</h3>
+                            <div class="flex items-center mt-2 text-xs">
+                                <span class="text-gray-400 flex items-center font-normal">
+                                    <span class="material-icons-outlined text-[14px] mr-0.5">remove</span> 0.00%
+                                </span>
+                                <span class="text-text-muted-light dark:text-text-muted-dark ml-2">Compared to last
+                                    day</span>
+                            </div>
+                        </div>
+                        <div
+                            class="bg-card-light dark:bg-card-dark p-5 rounded-xl shadow-sm border border-gray-100 dark:border-gray-800 transition-colors">
+                            <p class="text-sm text-text-muted-light dark:text-text-muted-dark mb-1">Today's Earnings</p>
+                            <h3 class="text-2xl font-normal text-gray-900 dark:text-white">$0.00</h3>
+                            <div class="flex items-center mt-2 text-xs">
+                                <span class="text-gray-400 flex items-center font-normal">
+                                    <span class="material-icons-outlined text-[14px] mr-0.5">remove</span> 0.00%
+                                </span>
+                                <span class="text-text-muted-light dark:text-text-muted-dark ml-2">Compared to last
+                                    day</span>
+                            </div>
+                        </div>
+                        <div
+                            class="bg-card-light dark:bg-card-dark p-5 rounded-xl shadow-sm border border-gray-100 dark:border-gray-800 transition-colors">
+                            <p class="text-sm text-text-muted-light dark:text-text-muted-dark mb-1">Average Order Value
+                            </p>
+                            <h3 class="text-2xl font-normal text-gray-900 dark:text-white">$0.00</h3>
+                            <div class="flex items-center mt-2 text-xs">
+                                <span class="text-gray-400 flex items-center font-normal">
+                                    <span class="material-icons-outlined text-[14px] mr-0.5">remove</span> 0.00%
+                                </span>
+                                <span class="text-text-muted-light dark:text-text-muted-dark ml-2">Compared to last
+                                    day</span>
+                            </div>
+                        </div>
+                        <div
+                            class="bg-card-light dark:bg-card-dark p-5 rounded-xl shadow-sm border border-gray-100 dark:border-gray-800 transition-colors">
+                            <p class="text-sm text-text-muted-light dark:text-text-muted-dark mb-1">Conversion Rate</p>
+                            <h3 class="text-2xl font-normal text-gray-900 dark:text-white">0.00%</h3>
+                            <div class="flex items-center mt-2 text-xs">
+                                <span class="text-gray-400 flex items-center font-normal">
+                                    <span class="material-icons-outlined text-[14px] mr-0.5">remove</span> 0.00%
+                                </span>
+                                <span class="text-text-muted-light dark:text-text-muted-dark ml-2">Compared to last
+                                    day</span>
+                            </div>
+                        </div>
+                        <div
+                            class="bg-card-light dark:bg-card-dark p-5 rounded-xl shadow-sm border border-gray-100 dark:border-gray-800 transition-colors">
+                            <p class="text-sm text-text-muted-light dark:text-text-muted-dark mb-1">Total Sales</p>
+                            <h3 class="text-2xl font-normal text-gray-900 dark:text-white">$0.00</h3>
+                            <div class="flex items-center mt-2 text-xs">
+                                <span class="text-gray-400 flex items-center font-normal">
+                                    <span class="material-icons-outlined text-[14px] mr-0.5">remove</span> 0.00%
+                                </span>
+                                <span class="text-text-muted-light dark:text-text-muted-dark ml-2">Compared to last
+                                    day</span>
+                            </div>
+                        </div>
+                        <div
+                            class="bg-card-light dark:bg-card-dark p-5 rounded-xl shadow-sm border border-gray-100 dark:border-gray-800 transition-colors">
+                            <p class="text-sm text-text-muted-light dark:text-text-muted-dark mb-1">Total Earnings</p>
+                            <h3 class="text-2xl font-normal text-gray-900 dark:text-white">$0.00</h3>
+                            <div class="flex items-center mt-2 text-xs">
+                                <span class="text-gray-400 flex items-center font-normal">
+                                    <span class="material-icons-outlined text-[14px] mr-0.5">remove</span> 0.00%
+                                </span>
+                                <span class="text-text-muted-light dark:text-text-muted-dark ml-2">Compared to last
+                                    day</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div
+                        class="lg:col-span-2 bg-card-light dark:bg-card-dark p-6 rounded-xl shadow-sm border border-gray-100 dark:border-gray-800 transition-colors flex flex-col">
+                        <div class="flex items-center justify-between mb-6">
+                            <h3 class="text-lg font-normal text-gray-900 dark:text-white">Overall Sales</h3>
+                            <div class="flex items-center gap-2">
+                                <span class="text-xs text-text-muted-light dark:text-text-muted-dark">Sort by</span>
+                                <div class="relative">
+                                    <select
+                                        class="appearance-none bg-transparent border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 text-xs py-1 pl-3 pr-8 rounded-md focus:outline-none focus:ring-1 focus:ring-primary">
+                                        <option>Week</option>
+                                        <option>Month</option>
+                                        <option>Year</option>
+                                    </select>
+                                    <div
+                                        class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-500">
+                                        <span class="material-icons-outlined text-sm">expand_more</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-6 mb-4 text-sm">
+                            <div class="flex items-center gap-2">
+                                <span class="w-3 h-3 bg-primary rounded-sm"></span>
+                                <span class="text-gray-600 dark:text-gray-300">Total Sales</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <span class="w-3 h-3 bg-blue-200 dark:bg-blue-900 rounded-sm"></span>
+                                <span class="text-gray-600 dark:text-gray-300">Total Earning</span>
+                            </div>
+                        </div>
+                        <div class="relative w-full flex-1 min-h-[300px]">
+                            <canvas id="salesChart"></canvas>
+                            <div
+                                class="absolute top-[20%] left-[55%] bg-primary text-white p-3 rounded-xl shadow-lg transform -translate-x-1/2 -translate-y-1/2 hidden md:block pointer-events-none animate-bounce">
+                                <div class="text-center">
+                                    <div class="font-normal text-lg">$0.00</div>
+                                    <div class="text-xs text-blue-100 flex items-center justify-center gap-1">
+                                        <span class="w-2 h-2 bg-green-400 rounded-full"></span> Earnings
+                                    </div>
+                                </div>
+                                <div
+                                    class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-4 h-4 bg-primary rotate-45">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- NEW PRODUCT UPLOAD FORM -->
+                <div
+                    class="bg-card-light dark:bg-card-dark p-6 rounded-xl shadow-sm border border-gray-100 dark:border-gray-800 transition-colors">
+                    <h3 class="text-lg font-normal text-gray-900 dark:text-white mb-6">Upload New Product</h3>
+                    <form id="productForm" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                        <div class="lg:col-span-1">
+                            <label class="block text-xs font-normal mb-2 text-gray-700 dark:text-gray-300">Product
+                                Name</label>
+                            <input type="text" id="name" required placeholder="Nike Air Max..."
+                                class="w-full text-sm py-2 px-3 rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary transition-colors">
+                        </div>
+                        <div class="lg:col-span-1">
+                            <label class="block text-xs font-normal mb-2 text-gray-700 dark:text-gray-300">Price (e.g.
+                                850,000)</label>
+                            <input type="text" id="price" required placeholder="850,000"
+                                class="w-full text-sm py-2 px-3 rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary transition-colors">
+                        </div>
+                        <div class="lg:col-span-1">
+                            <label class="block text-xs font-normal mb-2 text-gray-700 dark:text-gray-300">Stock
+                                (Quantity)</label>
+                            <input type="number" id="stock" required placeholder="100"
+                                class="w-full text-sm py-2 px-3 rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary transition-colors">
+                        </div>
+                        <div class="lg:col-span-1">
+                            <label class="block text-xs font-normal mb-2 text-gray-700 dark:text-gray-300">Image
+                                URL</label>
+                            <div class="flex gap-2">
+                                <input type="url" id="image" required placeholder="https://..."
+                                    class="flex-1 w-full text-sm py-2 px-3 rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary transition-colors">
+                                <button type="submit"
+                                    class="bg-primary hover:bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-normal shadow-md transition-colors whitespace-nowrap">
+                                    Submit
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <div
+                        class="lg:col-span-2 bg-card-light dark:bg-card-dark rounded-xl shadow-sm border border-gray-100 dark:border-gray-800 overflow-hidden transition-colors">
+                        <div
+                            class="p-6 flex items-center justify-between border-b border-gray-100 dark:border-gray-800">
+                            <h3 class="text-lg font-normal text-gray-900 dark:text-white">Store Inventory</h3>
+                            <div class="text-sm font-normal text-text-muted-light dark:text-text-muted-dark">
+                                Total Items: <span id="total-count" class="text-primary font-normal">0</span>
+                            </div>
+                        </div>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left border-collapse">
+                                <thead>
+                                    <tr class="bg-primary text-white text-xs uppercase tracking-wider">
+                                        <th class="px-6 py-4 font-normal">Product Name</th>
+                                        <th class="px-6 py-4 font-normal">Track ID</th>
+                                        <th class="px-6 py-4 font-normal">Sold</th>
+                                        <th class="px-6 py-4 font-normal">Price</th>
+                                        <th class="px-6 py-4 font-normal">Status / Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="product-list-body"
+                                    class="divide-y divide-gray-100 dark:divide-gray-800 text-sm">
+                                    <!-- Database driven products will be loaded here -->
+                                    <tr class="hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors">
+                                        <td colspan="5"
+                                            class="px-6 py-8 text-center text-text-muted-light dark:text-text-muted-dark">
+                                            No products available. Add some using the form above.
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div
+                        class="lg:col-span-1 bg-card-light dark:bg-card-dark p-6 rounded-xl shadow-sm border border-gray-100 dark:border-gray-800 transition-colors">
+                        <h3 class="text-lg font-normal text-gray-900 dark:text-white mb-6">Countries</h3>
+                        <div class="space-y-6">
+                            <div>
+                                <div class="flex justify-between items-center mb-1">
+                                    <span class="text-sm font-normal text-gray-700 dark:text-gray-300">USA</span>
+                                    <span class="text-sm font-normal text-primary">0%</span>
+                                </div>
+                                <div class="w-full bg-gray-100 dark:bg-gray-700 rounded-full h-1.5">
+                                    <div class="bg-primary h-1.5 rounded-full" style="width: 0%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between items-center mb-1">
+                                    <span class="text-sm font-normal text-gray-700 dark:text-gray-300">China</span>
+                                    <span class="text-sm font-normal text-blue-400">0%</span>
+                                </div>
+                                <div class="w-full bg-gray-100 dark:bg-gray-700 rounded-full h-1.5">
+                                    <div class="bg-primary h-1.5 rounded-full opacity-60" style="width: 0%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between items-center mb-1">
+                                    <span class="text-sm font-normal text-gray-700 dark:text-gray-300">Australia</span>
+                                    <span class="text-sm font-normal text-blue-400">0%</span>
+                                </div>
+                                <div class="w-full bg-gray-100 dark:bg-gray-700 rounded-full h-1.5">
+                                    <div class="bg-primary h-1.5 rounded-full opacity-90" style="width: 0%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between items-center mb-1">
+                                    <span class="text-sm font-normal text-gray-700 dark:text-gray-300">Singapore</span>
+                                    <span class="text-sm font-normal text-blue-400">0%</span>
+                                </div>
+                                <div class="w-full bg-gray-100 dark:bg-gray-700 rounded-full h-1.5">
+                                    <div class="bg-primary h-1.5 rounded-full opacity-70" style="width: 0%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between items-center mb-1">
+                                    <span class="text-sm font-normal text-gray-700 dark:text-gray-300">Canada</span>
+                                    <span class="text-sm font-normal text-blue-400">0%</span>
+                                </div>
+                                <div class="w-full bg-gray-100 dark:bg-gray-700 rounded-full h-1.5">
+                                    <div class="bg-primary h-1.5 rounded-full opacity-80" style="width: 0%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between items-center mb-1">
+                                    <span class="text-sm font-normal text-gray-700 dark:text-gray-300">Japan</span>
+                                    <span class="text-sm font-normal text-blue-400">0%</span>
+                                </div>
+                                <div class="w-full bg-gray-100 dark:bg-gray-700 rounded-full h-1.5">
+                                    <div class="bg-primary h-1.5 rounded-full opacity-75" style="width: 0%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between items-center mb-1">
+                                    <span class="text-sm font-normal text-gray-700 dark:text-gray-300">Thailand</span>
+                                    <span class="text-sm font-normal text-blue-400">0%</span>
+                                </div>
+                                <div class="w-full bg-gray-100 dark:bg-gray-700 rounded-full h-1.5">
+                                    <div class="bg-primary h-1.5 rounded-full opacity-40" style="width: 0%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const ctx = document.getElementById('salesChart').getContext('2d');
+            // Gradient for the line chart fill
+            const gradient = ctx.createLinearGradient(0, 0, 0, 400);
+            gradient.addColorStop(0, 'rgba(59, 130, 246, 0.2)'); // Blue with opacity
+            gradient.addColorStop(1, 'rgba(59, 130, 246, 0)');
+            // Dashed line gradient (lighter blue)
+            const dashedGradient = ctx.createLinearGradient(0, 0, 0, 400);
+            dashedGradient.addColorStop(0, 'rgba(147, 197, 253, 0.2)');
+            dashedGradient.addColorStop(1, 'rgba(147, 197, 253, 0)');
+            const salesChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                    datasets: [
+                        {
+                            label: 'Total Sales',
+                            data: [0, 0, 0, 0, 0, 0, 0],
+                            borderColor: '#3B82F6', // Primary Blue
+                            backgroundColor: gradient,
+                            borderWidth: 3,
+                            tension: 0.4,
+                            pointRadius: 4,
+                            pointBackgroundColor: '#fff',
+                            pointBorderColor: '#3B82F6',
+                            pointHoverRadius: 6,
+                            fill: true
+                        },
+                        {
+                            label: 'Total Earning',
+                            data: [0, 0, 0, 0, 0, 0, 0],
+                            borderColor: '#93C5FD', // Light Blue
+                            borderWidth: 2,
+                            borderDash: [5, 5],
+                            tension: 0.4,
+                            pointRadius: 0,
+                            fill: false
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            enabled: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 120,
+                            ticks: {
+                                stepSize: 40,
+                                color: '#9CA3AF',
+                                font: {
+                                    family: '-apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", sans-serif',
+                                    size: 11
+                                }
+                            },
+                            grid: {
+                                color: 'rgba(243, 244, 246, 1)',
+                                borderDash: [4, 4],
+                                drawBorder: false
+                            }
+                        },
+                        x: {
+                            ticks: {
+                                color: '#9CA3AF',
+                                font: {
+                                    family: '-apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", sans-serif',
+                                    size: 11
+                                }
+                            },
+                            grid: {
+                                display: false,
+                                drawBorder: false
+                            }
+                        }
+                    },
+                    elements: {
+                        point: {
+                            hitRadius: 20
+                        }
+                    }
+                },
+                // Dark mode adjustment plugin
+                plugins: [{
+                    beforeDraw: (chart) => {
+                        const isDark = document.documentElement.classList.contains('dark');
+                        const yGridColor = isDark ? 'rgba(55, 65, 81, 1)' : 'rgba(243, 244, 246, 1)';
+                        chart.options.scales.y.grid.color = yGridColor;
+                    }
+                }]
+            });
+            // Observer to update chart on dark mode toggle
+            const observer = new MutationObserver((mutations) => {
+                mutations.forEach((mutation) => {
+                    if (mutation.attributeName === 'class') {
+                        const isDark = document.documentElement.classList.contains('dark');
+                        salesChart.options.scales.y.grid.color = isDark ? 'rgba(55, 65, 81, 0.5)' : 'rgba(243, 244, 246, 1)';
+                        salesChart.update();
+                    }
+                });
+            });
+            observer.observe(document.documentElement, { attributes: true });
+
+
+            // --- REAL BACKEND API LOGIC ---
+            const API_URL = 'https://geosstore-api.onrender.com/api/products'; // Placeholder URL. When deployed, change to your Render URL.
+            // For local development, change the line above temporarily to:
+            // const API_URL = 'http://localhost:4000/api/products';
+
+            const productForm = document.getElementById('productForm');
+            const productListBody = document.getElementById('product-list-body');
+            const totalCountDisplay = document.getElementById('total-count');
+
+            let products = [];
+
+            async function loadProducts() {
+                try {
+                    const response = await fetch(API_URL);
+                    if (!response.ok) throw new Error('Network error');
+
+                    products = await response.json();
+                    totalCountDisplay.innerText = products.length;
+
+                    if (products.length === 0) {
+                        productListBody.innerHTML = `
+                            <tr>
+                                <td colspan="5" class="px-6 py-8 text-center text-text-muted-light dark:text-text-muted-dark">
+                                    No products available. Add some using the form above.
+                                </td>
+                            </tr>`;
+                        return;
+                    }
+
+                    productListBody.innerHTML = products.map((p) => `
+                        <tr class="hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors border-b border-gray-50 dark:border-gray-800 last:border-0">
+                        <td class="px-6 py-4 relative group">
+                            <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-lg bg-gray-100 dark:bg-gray-700 flex items-center justify-center overflow-hidden">
+                                <img src="${p.image}" class="max-w-full max-h-full object-cover mix-blend-multiply dark:mix-blend-normal">
+                            </div>
+                            <span class="font-normal text-gray-900 dark:text-white">${p.name}</span>
+                            </div>
+                        </td>
+                        <td class="px-6 py-4 text-text-muted-light dark:text-text-muted-dark text-xs font-mono">ID-${p.id}</td>
+                        <td class="px-6 py-4 text-text-muted-light dark:text-text-muted-dark p-sold">${p.sold} pcs</td>
+                        <td class="px-6 py-4 font-normal text-gray-900 dark:text-white">Rp ${p.price}</td>
+                        <td class="px-6 py-4 flex items-center justify-between">
+                            ${p.stock > 0
+                            ? `<div class="flex items-center gap-2 text-green-500 text-xs font-normal"><span class="w-2 h-2 rounded-full bg-green-500"></span> In Stock (${p.stock})</div>`
+                            : `<div class="flex items-center gap-2 text-gray-400 text-xs font-normal"><span class="w-2 h-2 rounded-full bg-gray-300 dark:bg-gray-600"></span> Out of Stock</div>`
+                        }
+                            <button onclick="deleteProduct(${p.id})" class="text-red-500 hover:text-red-700 bg-red-50 dark:bg-red-900/20 p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
+                                <span class="material-icons-outlined text-sm">delete</span>
+                            </button>
+                        </td>
+                        </tr>
+                    `).join('');
+                } catch (err) {
+                    console.error("Error loading products:", err);
+                    productListBody.innerHTML = `
+                        <tr>
+                            <td colspan="5" class="px-6 py-8 text-center text-red-500 text-sm">
+                                Failed to connect to backend server. Make sure it is running.
+                            </td>
+                        </tr>`;
+                }
+            }
+
+            productForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const submitBtn = productForm.querySelector('button[type="submit"]');
+                const originalText = submitBtn.innerText;
+                submitBtn.innerText = "Saving...";
+                submitBtn.disabled = true;
+
+                const newProduct = {
+                    name: document.getElementById('name').value,
+                    price: document.getElementById('price').value,
+                    stock: document.getElementById('stock').value,
+                    image: document.getElementById('image').value
+                };
+
+                try {
+                    const response = await fetch(API_URL, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(newProduct)
+                    });
+
+                    if (response.ok) {
+                        productForm.reset();
+                        loadProducts();
+                    }
+                } catch (err) {
+                    console.error("Error adding product:", err);
+                    alert("Failed to connect to the backend server.");
+                } finally {
+                    submitBtn.innerText = originalText;
+                    submitBtn.disabled = false;
+                }
+            });
+
+            window.deleteProduct = async function (id) {
+                if (!confirm('Are you sure you want to delete this product?')) return;
+
+                try {
+                    const response = await fetch(`${API_URL}/${id}`, { method: 'DELETE' });
+                    if (response.ok) {
+                        loadProducts();
+                    }
+                } catch (err) {
+                    console.error("Error deleting product:", err);
+                    alert("Failed to delete product.");
+                }
+            };
+
+            // Load on init
+            loadProducts();
+        });
+    </script>
+</body>
+
+</html>

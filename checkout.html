@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <meta name="description" content="GEOSSTORE Secure Checkout">
+    <title>GEOSSTORE Checkout</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet" />
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#111827",
+                        "background-light": "#F3F4F6",
+                        "background-dark": "#0f172a",
+                        "card-light": "#FFFFFF",
+                        "card-dark": "#1e293b",
+                        "text-secondary-light": "#6B7280",
+                        "text-secondary-dark": "#94a3b8",
+                    },
+                    fontFamily: {
+                        display: ["-apple-system", "BlinkMacSystemFont", "SF Pro Text", "Helvetica Neue", "sans-serif"],
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.5rem",
+                        'xl': '1rem',
+                        '2xl': '1.5rem',
+                    },
+                },
+            },
+        };
+    </script>
+    <style>
+        body {
+            font-weight: 300;
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Apple style inputs */
+        .apple-input {
+            background: rgba(245, 245, 247, 0.5);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            transition: all 0.2s ease;
+        }
+
+        .dark .apple-input {
+            background: rgba(50, 50, 55, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .apple-input:focus {
+            background: rgba(245, 245, 247, 0.8);
+            border-color: #0071e3;
+            box-shadow: 0 0 0 4px rgba(0, 113, 227, 0.2);
+            outline: none;
+        }
+
+        .dark .apple-input:focus {
+            background: rgba(50, 50, 55, 0.8);
+        }
+    </style>
+</head>
+
+<body
+    class="bg-card-light dark:bg-card-dark font-display text-gray-900 dark:text-gray-100 min-h-screen w-full transition-colors duration-200 antialiased flex flex-col">
+    <!-- Clean Minimal Header -->
+    <header class="flex items-center justify-between px-8 py-6 border-b border-gray-100 dark:border-gray-800 shrink-0">
+        <div class="flex items-center gap-2 cursor-pointer" onclick="window.location.href='feed.html'">
+            <img src="SVG/GS-LOGO-SVG-2.svg" alt="GS Logo" class="h-8 dark:invert" />
+        </div>
+        <div
+            class="flex items-center gap-2 text-sm text-text-secondary-light dark:text-text-secondary-dark font-medium">
+            <span class="material-icons-outlined text-sm">lock</span>
+            Secure Checkout
+        </div>
+    </header>
+
+    <main class="flex-1 overflow-y-auto px-4 py-8 md:p-12">
+        <div class="max-w-6xl mx-auto flex flex-col lg:flex-row gap-12">
+
+            <!-- Payment & Shipping Form -->
+            <div class="flex-1 space-y-10">
+                <!-- Contact Info -->
+                <section>
+                    <h2 class="text-xl font-normal mb-6 flex items-center justify-between">
+                        Contact
+                        <span class="text-xs text-text-secondary-light dark:text-text-secondary-dark">Have an account?
+                            <a href="login.html" class="text-blue-600 dark:text-blue-400 hover:underline">Log
+                                in</a></span>
+                    </h2>
+                    <div class="space-y-4">
+                        <input type="email" placeholder="Email or mobile phone number"
+                            class="w-full px-4 py-3 rounded-xl apple-input text-sm">
+                        <label class="flex items-center gap-3 cursor-pointer">
+                            <input type="checkbox" checked
+                                class="w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                            <span class="text-sm text-text-secondary-light dark:text-text-secondary-dark">Email me with
+                                news and offers</span>
+                        </label>
+                    </div>
+                </section>
+
+                <!-- Shipping -->
+                <section>
+                    <h2 class="text-xl font-normal mb-6">Delivery</h2>
+                    <div class="space-y-4">
+                        <div class="relative">
+                            <select
+                                class="w-full px-4 py-3 rounded-xl apple-input text-sm appearance-none cursor-pointer">
+                                <option>United States</option>
+                                <option>Angola</option>
+                                <option>United Kingdom</option>
+                                <option>Brazil</option>
+                                <option>Portugal</option>
+                            </select>
+                            <span
+                                class="material-icons-outlined absolute right-4 top-3.5 text-gray-400 pointer-events-none text-sm">expand_more</span>
+                        </div>
+                        <div class="grid grid-cols-2 gap-4">
+                            <input type="text" placeholder="First name (optional)"
+                                class="w-full px-4 py-3 rounded-xl apple-input text-sm">
+                            <input type="text" placeholder="Last name"
+                                class="w-full px-4 py-3 rounded-xl apple-input text-sm">
+                        </div>
+                        <input type="text" placeholder="Address"
+                            class="w-full px-4 py-3 rounded-xl apple-input text-sm">
+                        <input type="text" placeholder="Apartment, suite, etc. (optional)"
+                            class="w-full px-4 py-3 rounded-xl apple-input text-sm">
+                        <div class="grid grid-cols-3 gap-4">
+                            <input type="text" placeholder="City"
+                                class="w-full px-4 py-3 rounded-xl apple-input text-sm">
+                            <input type="text" placeholder="State"
+                                class="w-full px-4 py-3 rounded-xl apple-input text-sm">
+                            <input type="text" placeholder="ZIP code"
+                                class="w-full px-4 py-3 rounded-xl apple-input text-sm">
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Payment -->
+                <section>
+                    <h2 class="text-xl font-normal mb-6">Payment</h2>
+                    <p class="text-sm text-text-secondary-light dark:text-text-secondary-dark mb-4">All transactions are
+                        secure and encrypted.</p>
+
+                    <div class="border border-gray-200 dark:border-gray-700 rounded-xl overflow-hidden">
+                        <div
+                            class="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-800/50 border-b border-gray-200 dark:border-gray-700 cursor-pointer">
+                            <label class="flex items-center gap-3 cursor-pointer select-none font-normal">
+                                <input type="radio" name="payment" checked
+                                    class="w-4 h-4 text-blue-600 focus:ring-blue-500">
+                                Credit card
+                            </label>
+                            <div class="flex gap-1">
+                                <span
+                                    class="bg-gray-200 dark:bg-gray-600 w-8 h-5 rounded flex items-center justify-center text-[10px] font-bold">VISA</span>
+                                <span
+                                    class="bg-gray-200 dark:bg-gray-600 w-8 h-5 rounded flex items-center justify-center text-[10px] font-bold">MC</span>
+                            </div>
+                        </div>
+
+                        <!-- Card Details Expanded -->
+                        <div class="p-4 space-y-4 bg-white dark:bg-card-dark">
+                            <div class="relative">
+                                <input type="text" placeholder="Card number"
+                                    class="w-full px-4 py-3 rounded-xl apple-input text-sm">
+                                <span
+                                    class="material-icons-outlined absolute right-4 top-3 text-gray-400 pointer-events-none">credit_card</span>
+                            </div>
+                            <div class="grid grid-cols-2 gap-4">
+                                <input type="text" placeholder="Expiration date (MM / YY)"
+                                    class="w-full px-4 py-3 rounded-xl apple-input text-sm">
+                                <div class="relative">
+                                    <input type="text" placeholder="Security code"
+                                        class="w-full px-4 py-3 rounded-xl apple-input text-sm">
+                                    <span
+                                        class="material-icons-outlined absolute right-4 top-3 text-gray-400 pointer-events-none text-sm">help_outline</span>
+                                </div>
+                            </div>
+                            <input type="text" placeholder="Name on card"
+                                class="w-full px-4 py-3 rounded-xl apple-input text-sm">
+                        </div>
+
+                        <!-- Apple Pay Option -->
+                        <div
+                            class="flex items-center justify-between p-4 bg-white dark:bg-card-dark border-t border-gray-200 dark:border-gray-700 cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+                            <label class="flex items-center gap-3 cursor-pointer select-none font-normal w-full">
+                                <input type="radio" name="payment" class="w-4 h-4 text-blue-600 focus:ring-blue-500">
+                                <span>Pay</span>
+                            </label>
+                        </div>
+                    </div>
+                </section>
+
+                <button
+                    class="w-full bg-[#0071e3] hover:bg-[#0077ED] text-white py-4 rounded-xl font-normal text-lg transition-colors shadow-sm">
+                    Pay now
+                </button>
+            </div>
+
+            <!-- Order Summary Sidebar -->
+            <div
+                class="lg:w-[420px] bg-gray-50 dark:bg-gray-800/20 p-8 rounded-2xl border border-gray-100 dark:border-gray-800 h-fit sticky top-8">
+                <h3 class="font-normal text-xl mb-6">Order Summary</h3>
+
+                <!-- Sample Cart Items -->
+                <div class="space-y-6 mb-8" id="checkout-cart">
+                    <p class="text-sm text-text-secondary-light dark:text-text-secondary-dark italic text-center py-4">
+                        Your cart is empty.</p>
+                </div>
+
+                <div class="flex gap-2 mb-8">
+                    <input type="text" placeholder="Discount code or gift card"
+                        class="flex-1 px-4 py-3 rounded-xl apple-input text-sm uppercase">
+                    <button
+                        class="px-6 py-3 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 rounded-xl font-normal text-sm transition-colors">Apply</button>
+                </div>
+
+                <div
+                    class="space-y-3 text-sm text-text-secondary-light dark:text-text-secondary-dark border-t border-gray-200 dark:border-gray-700 pt-6">
+                    <div class="flex justify-between">
+                        <span>Subtotal</span>
+                        <span class="text-black dark:text-white">Rp 0</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span>Shipping</span>
+                        <span class="text-xs text-gray-500">Calculated at next step</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span>Estimated taxes</span>
+                        <span class="text-black dark:text-white">Rp 0</span>
+                    </div>
+                </div>
+
+                <div class="flex justify-between items-end border-t border-gray-200 dark:border-gray-700 mt-6 pt-6">
+                    <span class="text-lg font-normal">Total</span>
+                    <div class="text-right">
+                        <span class="text-xs text-gray-400 mr-2">AO</span>
+                        <span class="text-2xl font-normal">Rp 0</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+</body>
+
+</html>
