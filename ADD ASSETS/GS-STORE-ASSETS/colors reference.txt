@@ -1,0 +1,10 @@
+regular text: #333333, font weight 200, size h4 or h3
+
+nav buttons on hover: #0071E2
+
+log in button: #0071E2
+
+sign up button: #fff but on hover #0071E2
+
+background white
+

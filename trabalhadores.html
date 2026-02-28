@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="pt-AO">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel do Trabalhador — GEOSSTORE</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="icon" href="SVG/GS-LOGO-SVG-2.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            background: var(--bg-subtle);
+        }
+
+        .worker-header {
+            height: 64px;
+            background: var(--white);
+            border-bottom: 1px solid var(--border-light);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 32px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+        }
+
+        .worker-header-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .worker-main {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 96px 24px 60px;
+        }
+
+        .worker-welcome {
+            margin-bottom: 32px;
+        }
+
+        .worker-tabs {
+            display: flex;
+            gap: 4px;
+            background: var(--bg-light);
+            padding: 4px;
+            border-radius: var(--radius-sm);
+            margin-bottom: 24px;
+            width: fit-content;
+        }
+
+        .worker-tab {
+            padding: 10px 24px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            color: var(--text-secondary);
+            background: transparent;
+        }
+
+        .worker-tab:hover {
+            color: var(--accent);
+        }
+
+        .worker-tab.active {
+            background: var(--white);
+            color: var(--black);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .worker-card {
+            background: var(--white);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+        }
+
+        .worker-card-header {
+            padding: 20px 24px;
+            border-bottom: 1px solid var(--border-light);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .worker-card-header h3 {
+            font-size: 1rem;
+        }
+
+        .order-detail-drawer {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 480px;
+            max-width: 100%;
+            height: 100vh;
+            background: var(--white);
+            z-index: 3000;
+            transform: translateX(100%);
+            transition: transform var(--transition-slow);
+            display: flex;
+            flex-direction: column;
+            box-shadow: -8px 0 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .order-detail-drawer.active {
+            transform: translateX(0);
+        }
+
+        .order-detail-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 24px;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .order-detail-body {
+            flex: 1;
+            overflow-y: auto;
+            padding: 24px;
+        }
+
+        .order-detail-section {
+            margin-bottom: 24px;
+        }
+
+        .order-detail-section h4 {
+            font-size: 0.9rem;
+            margin-bottom: 12px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            font-weight: 600;
+        }
+
+        .order-info-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            font-size: 0.85rem;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .order-info-row:last-child {
+            border-bottom: none;
+        }
+
+        .order-status-selector {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .order-status-btn {
+            padding: 6px 16px;
+            border: 1px solid var(--border-light);
+            border-radius: 999px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            background: var(--white);
+        }
+
+        .order-status-btn:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .order-status-btn.active {
+            background: var(--black);
+            color: var(--white);
+            border-color: var(--black);
+        }
+
+        .quick-stat {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .quick-stat-item {
+            flex: 1;
+            background: var(--white);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-md);
+            padding: 20px;
+            text-align: center;
+            transition: all var(--transition-fast);
+        }
+
+        .quick-stat-item:hover {
+            border-color: var(--accent);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .quick-stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--black);
+        }
+
+        .quick-stat-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 6px;
+        }
+
+        .status-dot.pending {
+            background: #f9a825;
+        }
+
+        .status-dot.confirmed {
+            background: #0071E2;
+        }
+
+        .status-dot.shipped {
+            background: #7c4dff;
+        }
+
+        .status-dot.delivered {
+            background: #2e7d32;
+        }
+
+        .status-dot.cancelled {
+            background: #e53935;
+        }
+
+        @media (max-width: 768px) {
+            .quick-stat {
+                flex-direction: column;
+            }
+
+            .order-detail-drawer {
+                width: 100%;
+            }
+
+            .worker-tabs {
+                width: 100%;
+                overflow-x: auto;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ═══ HEADER ═══ -->
+    <div class="worker-header">
+        <div class="worker-header-left">
+            <a href="index.html">
+                <img src="SVG/GS-LOGO-SVG-2.svg" alt="GEOSSTORE" width="32" height="32">
+            </a>
+            <div>
+                <div style="font-weight:600;font-size:0.9rem;">Painel do Trabalhador</div>
+                <div class="text-xs text-muted">GEOSSTORE</div>
+            </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:16px;">
+            <span class="text-sm text-muted" id="worker-date"></span>
+            <div class="badge badge-outline">Trabalhador</div>
+            <a href="index.html" class="btn btn-ghost btn-sm">← Loja</a>
+        </div>
+    </div>
+
+    <!-- ═══ MAIN ═══ -->
+    <main class="worker-main">
+
+        <div class="worker-welcome">
+            <h1 style="font-size:1.6rem;">Bom dia 👋</h1>
+            <p class="text-muted">Aqui está o resumo das encomendas de hoje.</p>
+        </div>
+
+        <!-- Quick Stats -->
+        <div class="quick-stat" id="quick-stats">
+            <div class="quick-stat-item">
+                <div class="quick-stat-value" id="qs-pending">—</div>
+                <div class="quick-stat-label">Pendentes</div>
+            </div>
+            <div class="quick-stat-item">
+                <div class="quick-stat-value" id="qs-confirmed">—</div>
+                <div class="quick-stat-label">Confirmados</div>
+            </div>
+            <div class="quick-stat-item">
+                <div class="quick-stat-value" id="qs-shipped">—</div>
+                <div class="quick-stat-label">Enviados</div>
+            </div>
+            <div class="quick-stat-item">
+                <div class="quick-stat-value" id="qs-delivered">—</div>
+                <div class="quick-stat-label">Entregues Hoje</div>
+            </div>
+        </div>
+
+        <!-- Tabs -->
+        <div class="worker-tabs" role="tablist">
+            <button class="worker-tab active" data-wtab="orders" role="tab" aria-selected="true"
+                onclick="switchWorkerTab('orders')">Encomendas</button>
+            <button class="worker-tab" data-wtab="search" role="tab"
+                onclick="switchWorkerTab('search')">Procurar</button>
+        </div>
+
+        <!-- ─── ORDERS TAB ─── -->
+        <div class="worker-panel" id="panel-orders">
+            <div class="worker-card">
+                <div class="worker-card-header">
+                    <h3>Encomendas</h3>
+                    <div style="display:flex;gap:8px;align-items:center;">
+                        <select class="sort-select form-select form-input" id="worker-filter" style="width:auto;">
+                            <option value="all">Todos</option>
+                            <option value="pending">Pendentes</option>
+                            <option value="confirmed">Confirmados</option>
+                            <option value="shipped">Enviados</option>
+                            <option value="delivered">Entregues</option>
+                        </select>
+                    </div>
+                </div>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Nº</th>
+                            <th>Cliente</th>
+                            <th>Telefone</th>
+                            <th>Artigos</th>
+                            <th>Total</th>
+                            <th>Estado</th>
+                            <th>Data</th>
+                            <th>Acção</th>
+                        </tr>
+                    </thead>
+                    <tbody id="worker-orders-body">
+                        <tr>
+                            <td colspan="8" class="text-center text-muted" style="padding:60px;">
+                                Nenhuma encomenda — Conectar à base de dados
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- ─── SEARCH TAB ─── -->
+        <div class="worker-panel" id="panel-search" style="display:none;">
+            <div class="worker-card" style="padding:32px;">
+                <h3 style="margin-bottom:20px;">Procurar Encomenda</h3>
+                <div style="display:flex;gap:12px;margin-bottom:24px;">
+                    <input type="text" class="form-input" id="search-order-input"
+                        placeholder="Número da encomenda, telefone ou nome...">
+                    <button class="btn btn-primary" id="search-order-btn">Procurar</button>
+                </div>
+                <div id="search-results">
+                    <p class="text-center text-muted" style="padding:40px;">Introduza um termo de pesquisa para
+                        encontrar encomendas.</p>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- ═══ ORDER DETAIL DRAWER ═══ -->
+    <div class="cart-overlay" id="order-overlay" aria-hidden="true"></div>
+    <aside class="order-detail-drawer" id="order-drawer" role="dialog" aria-label="Detalhes da encomenda">
+        <div class="order-detail-header">
+            <h3 style="font-size:1rem;">Detalhes da Encomenda</h3>
+            <button class="cart-close-btn" id="close-order-drawer" aria-label="Fechar">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="18" y1="6" x2="6" y2="18" />
+                    <line x1="6" y1="6" x2="18" y2="18" />
+                </svg>
+            </button>
+        </div>
+        <div class="order-detail-body">
+
+            <div class="order-detail-section">
+                <h4>Informação do Pedido</h4>
+                <div class="order-info-row">
+                    <span>Nº Encomenda</span>
+                    <span id="od-number">—</span>
+                </div>
+                <div class="order-info-row">
+                    <span>Data</span>
+                    <span id="od-date">—</span>
+                </div>
+                <div class="order-info-row">
+                    <span>Pagamento</span>
+                    <span id="od-payment">—</span>
+                </div>
+            </div>
+
+            <div class="order-detail-section">
+                <h4>Cliente</h4>
+                <div class="order-info-row">
+                    <span>Nome</span>
+                    <span id="od-name">—</span>
+                </div>
+                <div class="order-info-row">
+                    <span>Telefone</span>
+                    <span id="od-phone">—</span>
+                </div>
+                <div class="order-info-row">
+                    <span>E-mail</span>
+                    <span id="od-email">—</span>
+                </div>
+            </div>
+
+            <div class="order-detail-section">
+                <h4>Entrega</h4>
+                <div class="order-info-row">
+                    <span>Endereço</span>
+                    <span id="od-address">—</span>
+                </div>
+                <div class="order-info-row">
+                    <span>Cidade / Província</span>
+                    <span id="od-city">—</span>
+                </div>
+                <div class="order-info-row">
+                    <span>Notas</span>
+                    <span id="od-notes">—</span>
+                </div>
+            </div>
+
+            <div class="order-detail-section">
+                <h4>Produtos</h4>
+                <div id="od-products" style="margin-bottom:12px;">
+                    <p class="text-muted text-sm">Nenhum produto</p>
+                </div>
+                <div class="order-info-row" style="font-weight:600;">
+                    <span>Total</span>
+                    <span id="od-total">—</span>
+                </div>
+            </div>
+
+            <div class="order-detail-section">
+                <h4>Actualizar Estado</h4>
+                <div class="order-status-selector" id="od-status-selector">
+                    <button class="order-status-btn" data-status="pending">⏳ Pendente</button>
+                    <button class="order-status-btn" data-status="confirmed">✅ Confirmado</button>
+                    <button class="order-status-btn" data-status="shipped">📦 Enviado</button>
+                    <button class="order-status-btn" data-status="delivered">🎉 Entregue</button>
+                </div>
+                <button class="btn btn-primary btn-full" style="margin-top:16px;" id="update-status-btn">
+                    Guardar Estado
+                </button>
+            </div>
+
+        </div>
+    </aside>
+
+    <div class="toast-container" aria-live="polite"></div>
+
+    <script src="app.js"></script>
+    <script>
+        // ── Date ──
+        document.getElementById('worker-date').textContent = new Date().toLocaleDateString('pt-AO', {
+            weekday: 'short', day: 'numeric', month: 'short'
+        });
+
+        const statusLabels = { pending: 'Pendente', confirmed: 'Confirmado', shipped: 'Enviado', delivered: 'Entregue', cancelled: 'Cancelado' };
+        let currentOrderId = null;
+
+        function renderStatusBadge(status) {
+            return `<span><span class="status-dot ${status}"></span>${statusLabels[status] || status}</span>`;
+        }
+        function formatDate(d) {
+            return new Date(d).toLocaleDateString('pt-AO', { day: '2-digit', month: 'short', year: 'numeric' });
+        }
+
+        // ── Tab Switching ──
+        function switchWorkerTab(tab) {
+            document.querySelectorAll('.worker-panel').forEach(p => p.style.display = 'none');
+            document.getElementById(`panel-${tab}`).style.display = 'block';
+            document.querySelectorAll('.worker-tab').forEach(t => {
+                t.classList.toggle('active', t.dataset.wtab === tab);
+                t.setAttribute('aria-selected', t.dataset.wtab === tab);
+            });
+        }
+
+        // ── Load Quick Stats ──
+        async function loadWorkerStats() {
+            try {
+                const stats = await GeoAPI.get('/dashboard/stats');
+                const s = stats.ordersByStatus || {};
+                document.getElementById('qs-pending').textContent = s.pending || 0;
+                document.getElementById('qs-confirmed').textContent = s.confirmed || 0;
+                document.getElementById('qs-shipped').textContent = s.shipped || 0;
+                document.getElementById('qs-delivered').textContent = s.delivered || 0;
+            } catch (err) {
+                console.error('Stats error:', err);
+            }
+        }
+
+        // ── Load Orders ──
+        async function loadWorkerOrders(status = 'all') {
+            try {
+                const orders = await GeoAPI.get(`/orders?status=${status}`);
+                const tbody = document.getElementById('worker-orders-body');
+                if (orders.length > 0) {
+                    tbody.innerHTML = orders.map(o => `
+                        <tr>
+                            <td><strong>${o.order_number}</strong></td>
+                            <td>${o.first_name} ${o.last_name}</td>
+                            <td>${o.phone}</td>
+                            <td>—</td>
+                            <td>${GeoUtils.formatPrice(o.total)}</td>
+                            <td>${renderStatusBadge(o.status)}</td>
+                            <td>${formatDate(o.created_at)}</td>
+                            <td><button class="btn btn-ghost btn-sm" onclick="openOrderDrawer(${o.id})">Ver</button></td>
+                        </tr>
+                    `).join('');
+                } else {
+                    tbody.innerHTML = '<tr><td colspan="8" class="text-center text-muted" style="padding:60px;">Nenhuma encomenda.</td></tr>';
+                }
+            } catch (err) {
+                console.error('Orders error:', err);
+            }
+        }
+
+        // ── Order Drawer ──
+        const orderOverlay = document.getElementById('order-overlay');
+        const orderDrawer = document.getElementById('order-drawer');
+
+        async function openOrderDrawer(orderId) {
+            currentOrderId = orderId;
+            try {
+                const order = await GeoAPI.get(`/orders/${orderId}`);
+                document.getElementById('od-number').textContent = order.order_number;
+                document.getElementById('od-date').textContent = formatDate(order.created_at);
+                document.getElementById('od-payment').textContent = order.payment_method;
+                document.getElementById('od-name').textContent = `${order.first_name} ${order.last_name}`;
+                document.getElementById('od-phone').textContent = order.phone;
+                document.getElementById('od-email').textContent = order.email || '—';
+                document.getElementById('od-address').textContent = order.address;
+                document.getElementById('od-city').textContent = `${order.city}, ${order.province}`;
+                document.getElementById('od-notes').textContent = order.notes || '—';
+                document.getElementById('od-total').textContent = GeoUtils.formatPrice(order.total);
+
+                // Items
+                const productsEl = document.getElementById('od-products');
+                if (order.items && order.items.length > 0) {
+                    productsEl.innerHTML = order.items.map(i => `
+                        <div class="order-info-row">
+                            <span>${i.product_name} ${i.size ? '(T.' + i.size + ')' : ''} × ${i.quantity}</span>
+                            <span>${GeoUtils.formatPrice(i.price * i.quantity)}</span>
+                        </div>
+                    `).join('');
+                } else {
+                    productsEl.innerHTML = '<p class="text-muted text-sm">Sem detalhes de produtos.</p>';
+                }
+
+                // Set active status button
+                document.querySelectorAll('.order-status-btn').forEach(b => {
+                    b.classList.toggle('active', b.dataset.status === order.status);
+                });
+
+                orderOverlay.classList.add('active');
+                orderDrawer.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            } catch (err) {
+                GeoToast.show('Erro ao carregar encomenda.', 'error');
+            }
+        }
+
+        function closeOrderDrawer() {
+            orderOverlay.classList.remove('active');
+            orderDrawer.classList.remove('active');
+            document.body.style.overflow = '';
+            currentOrderId = null;
+        }
+
+        document.getElementById('close-order-drawer')?.addEventListener('click', closeOrderDrawer);
+        orderOverlay?.addEventListener('click', closeOrderDrawer);
+
+        // ── Status Selector ──
+        document.querySelectorAll('.order-status-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.order-status-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+            });
+        });
+
+        // ── Update Status ──
+        document.getElementById('update-status-btn')?.addEventListener('click', async () => {
+            const selectedStatus = document.querySelector('.order-status-btn.active')?.dataset.status;
+            if (!selectedStatus || !currentOrderId) {
+                GeoToast.show('Selecione um estado primeiro.', 'error');
+                return;
+            }
+            try {
+                await GeoAPI.patch(`/orders/${currentOrderId}/status`, { status: selectedStatus });
+                GeoToast.show('Estado actualizado com sucesso!', 'success');
+                closeOrderDrawer();
+                loadWorkerOrders();
+                loadWorkerStats();
+            } catch (err) {
+                GeoToast.show('Erro ao actualizar estado.', 'error');
+            }
+        });
+
+        // ── Search ──
+        document.getElementById('search-order-btn')?.addEventListener('click', async () => {
+            const query = document.getElementById('search-order-input')?.value;
+            if (!query) {
+                GeoToast.show('Introduza um termo de pesquisa.', 'error');
+                return;
+            }
+            try {
+                const results = await GeoAPI.get(`/orders/search/${encodeURIComponent(query)}`);
+                const container = document.getElementById('search-results');
+                if (results.length > 0) {
+                    container.innerHTML = `
+                        <table class="data-table">
+                            <thead><tr><th>Nº</th><th>Cliente</th><th>Telefone</th><th>Total</th><th>Estado</th><th>Acção</th></tr></thead>
+                            <tbody>
+                                ${results.map(o => `
+                                    <tr>
+                                        <td><strong>${o.order_number}</strong></td>
+                                        <td>${o.first_name} ${o.last_name}</td>
+                                        <td>${o.phone}</td>
+                                        <td>${GeoUtils.formatPrice(o.total)}</td>
+                                        <td>${renderStatusBadge(o.status)}</td>
+                                        <td><button class="btn btn-ghost btn-sm" onclick="openOrderDrawer(${o.id})">Ver</button></td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    `;
+                } else {
+                    container.innerHTML = '<p class="text-center text-muted" style="padding:40px;">Nenhuma encomenda encontrada.</p>';
+                }
+            } catch (err) {
+                GeoToast.show('Erro na pesquisa.', 'error');
+            }
+        });
+
+        // ── Filter ──
+        document.getElementById('worker-filter')?.addEventListener('change', (e) => {
+            loadWorkerOrders(e.target.value);
+        });
+
+        // ── Init ──
+        loadWorkerStats();
+        loadWorkerOrders();
+    </script>
+
+</body>
+
+</html>

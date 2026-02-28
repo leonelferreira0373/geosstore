@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --space-grey: #1d1d1f;
+            --apple-blue: #0071e3;
+            --muted-grey: #a1a1a6;
+        }
+
+        body {
+            background-color: var(--space-grey);
+            margin: 0;
+            font-family: 'Inter', -apple-system, sans-serif;
+            overflow: hidden;
+        }
+
+        /* Gradient Text with Shimmer Glint */
+        .hero-headline {
+            font-size: clamp(48px, 8vw, 96px);
+            font-weight: 800;
+            letter-spacing: -0.04em;
+            line-height: 1.05;
+            background: linear-gradient(to bottom,
+                    #ffffff 0%,
+                    #ffffff 30%,
+                    var(--muted-grey) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            position: relative;
+        }
+
+        /* The Shimmering "Glint" */
+        .hero-headline::after {
+            content: "Pro. Beyond.";
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(120deg,
+                    transparent 45%,
+                    rgba(255, 255, 255, 0.6) 50%,
+                    transparent 55%);
+            background-size: 200% 100%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: glint 6s infinite;
+        }
+
+        @keyframes glint {
+            0% {
+                background-position: -200% 0;
+            }
+
+            20% {
+                background-position: 200% 0;
+            }
+
+            100% {
+                background-position: 200% 0;
+            }
+        }
+
+        /* Entrance Animation */
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+        }
+
+        .delay-1 {
+            animation-delay: 0.2s;
+        }
+
+        .delay-2 {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Learn More Link Hover */
+        .learn-more-link:hover .arrow {
+            transform: translateX(4px);
+        }
+    </style>
+</head>
+
+<body class="flex items-center justify-center h-screen">
+
+    <div class="text-center px-6">
+        <h1 class="hero-headline fade-in-up">
+            Pro. Beyond.
+        </h1>
+
+        <p class="fade-in-up delay-1 mt-6 text-xl md:text-2xl font-medium text-[#86868b] tracking-tight">
+            Built for a new era of performance.
+        </p>
+
+        <div class="fade-in-up delay-2 mt-8">
+            <a href="#"
+                class="learn-more-link group inline-flex items-center text-[19px] font-medium text-[#0071e3] transition-opacity hover:opacity-80">
+                Learn more
+                <svg class="arrow ml-1 transition-transform duration-300" width="12" height="12" viewBox="0 0 12 12"
+                    fill="none">
+                    <path d="M4.5 2.5L8 6L4.5 9.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg>
+            </a>
+        </div>
+    </div>
+
+</body>
+
+</html>

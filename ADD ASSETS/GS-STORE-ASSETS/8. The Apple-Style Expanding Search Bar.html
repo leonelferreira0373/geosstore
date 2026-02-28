@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <style>
+        :root {
+            --apple-grey-bg: rgba(245, 245, 247, 0.8);
+            --apple-text: #1d1d1f;
+            --apple-muted: #86868b;
+            --apple-blue: #0071e3;
+            --focus-glow: rgba(0, 113, 227, 0.2);
+        }
+
+        body {
+            background-color: #ffffff;
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", sans-serif;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            /* Centered at the top */
+            padding-top: 40px;
+        }
+
+        /* --- THE HEADER CONTAINER --- */
+        .nav-header {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            max-width: 500px;
+            height: 48px;
+        }
+
+        /* --- NAVIGATION LINKS --- */
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            position: absolute;
+            /* Positioned to sit naturally next to the collapsed search */
+            transform: translateX(-30px);
+        }
+
+        .nav-item {
+            font-size: 14px;
+            font-weight: 400;
+            color: var(--apple-text);
+            text-decoration: none;
+            letter-spacing: -0.01em;
+            transition: opacity 0.2s ease;
+            will-change: transform, opacity;
+        }
+
+        .nav-item:hover {
+            opacity: 0.6;
+        }
+
+        /* --- SEARCH COMPONENT --- */
+        .search-wrapper {
+            position: absolute;
+            display: flex;
+            align-items: center;
+            /* Anchored to the right side of the nav space */
+            right: 40px;
+        }
+
+        .search-input-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 8px;
+            /* Perfectly centered in the 32px initial width */
+            width: 16px;
+            height: 16px;
+            color: var(--apple-text);
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        .search-field {
+            width: 32px;
+            height: 32px;
+            background: var(--apple-grey-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 999px;
+            border: 1px solid transparent;
+            padding: 0 16px 0 32px;
+            /* Pad for icon */
+            font-size: 14px;
+            color: var(--apple-text);
+            cursor: pointer;
+            /* Acts like a button when closed */
+            outline: none;
+            overflow: hidden;
+            will-change: width, box-shadow, border-color;
+            /* Placeholder transition */
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        /* Hide placeholder completely when collapsed */
+        .search-field::placeholder {
+            color: transparent;
+            transition: color 0.2s ease;
+        }
+
+        .search-field.is-expanded::placeholder {
+            color: var(--apple-muted);
+        }
+
+        /* Focus States */
+        .search-field.is-expanded:focus {
+            border-color: var(--apple-blue);
+            box-shadow: 0 0 0 4px var(--focus-glow);
+        }
+
+        /* --- THE CANCEL BUTTON --- */
+        .cancel-btn {
+            font-size: 14px;
+            color: var(--apple-blue);
+            margin-left: 16px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            opacity: 0;
+            pointer-events: none;
+            will-change: opacity, transform;
+            transform: translateX(10px);
+            white-space: nowrap;
+        }
+
+        .cancel-btn:hover {
+            opacity: 0.8 !important;
+            /* GSAP sets inline opacity: 1, so override */
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="nav-header">
+
+        <nav class="nav-links">
+            <a href="#" class="nav-item">Store</a>
+            <a href="#" class="nav-item">Mac</a>
+            <a href="#" class="nav-item">iPad</a>
+        </nav>
+
+        <div class="search-wrapper">
+            <div class="search-input-container">
+                <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+                <input type="text" class="search-field" placeholder="Search apple.com" id="searchInput">
+            </div>
+            <button class="cancel-btn" id="cancelBtn">Cancel</button>
+        </div>
+
+    </header>
+
+    <script>
+        const searchInput = document.getElementById('searchInput');
+        const cancelBtn = document.getElementById('cancelBtn');
+        const navItems = document.querySelectorAll('.nav-item');
+        const searchIcon = document.querySelector('.search-icon');
+        const searchField = document.querySelector('.search-field');
+
+        // GSAP Timeline setup for bidirectional "spatial" playback
+        const searchTl = gsap.timeline({
+            paused: true,
+            onReverseComplete: () => {
+                searchField.classList.remove('is-expanded');
+                searchField.blur();
+                searchField.value = ''; // Clear input on close
+            }
+        });
+
+        // 1. The Navigation Push & Fade
+        // Stagger links out (0.05s apart) to the left to "make room"
+        searchTl.to(navItems, {
+            x: -20,
+            opacity: 0,
+            duration: 0.3,
+            stagger: 0.05,
+            ease: "power2.out",
+            pointerEvents: "none"
+        }, 0);
+
+        // 2. Icon color transition
+        searchTl.to(searchIcon, {
+            color: '#86868b',
+            duration: 0.3
+        }, 0);
+
+        // 3. The Search Bar Expansion
+        // Expanding to 300px using the specified "snappy" spring ease
+        searchTl.to(searchField, {
+            width: 300,
+            duration: 0.5,
+            cursor: "text",
+            ease: "back.out(1.7)"
+        }, 0);
+
+        // 4. The Cancel Button Reveal
+        searchTl.to(cancelBtn, {
+            opacity: 1,
+            x: 0,
+            pointerEvents: "auto",
+            duration: 0.4,
+            ease: "power2.out"
+        }, 0.2); // Start halfway through the expansion
+
+        // Interactions
+        searchInput.addEventListener('click', () => {
+            if (!searchField.classList.contains('is-expanded')) {
+                searchField.classList.add('is-expanded');
+                searchTl.play();
+
+                // Focus the input when animation completes (or immediately, depending on preference)
+                setTimeout(() => { searchInput.focus(); }, 100);
+            }
+        });
+
+        cancelBtn.addEventListener('click', () => {
+            searchTl.reverse();
+        });
+    </script>
+</body>
+
+</html>

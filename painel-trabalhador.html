@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel do Trabalhador — GEOSSTORE</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background: var(--bg-subtle);
+            font-family: 'Inter', sans-serif;
+            color: var(--black);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* ─── AUTH SCREEN ─── */
+        .auth-overlay {
+            position: fixed;
+            inset: 0;
+            background: var(--bg-subtle);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .auth-card {
+            background: var(--white);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-lg);
+            padding: 48px;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: var(--shadow-md);
+            text-align: center;
+        }
+
+        .auth-card img {
+            width: 60px;
+            height: 60px;
+            margin-bottom: 24px;
+        }
+
+        .auth-card h2 {
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+        }
+
+        .auth-card p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 32px;
+        }
+
+        /* ─── MAIN DASHBOARD ─── */
+        .dashboard-container {
+            display: none;
+            flex-direction: column;
+            width: 100%;
+            background: var(--white);
+        }
+
+        .top-navbar {
+            padding: 16px 32px;
+            background: var(--black);
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .top-navbar h1 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .user-control {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            font-size: 0.9rem;
+        }
+
+        .main-content {
+            padding: 40px;
+            flex: 1;
+            overflow-y: auto;
+            background: var(--bg-light);
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 24px;
+        }
+
+        .section-header h2 {
+            margin: 0;
+            font-size: 1.5rem;
+        }
+
+        .data-table-container {
+            background: var(--white);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .data-table th,
+        .data-table td {
+            text-align: left;
+            padding: 16px 24px;
+            border-bottom: 1px solid var(--border-light);
+            font-size: 0.85rem;
+        }
+
+        .data-table th {
+            color: var(--text-muted);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            background: var(--bg-light);
+        }
+
+        .data-table tbody tr:hover {
+            background: rgba(0, 0, 0, 0.01);
+        }
+
+        /* ─── EDIT MODAL ─── */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.6);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            backdrop-filter: blur(4px);
+        }
+
+        .modal-card {
+            background: var(--white);
+            border-radius: var(--radius-md);
+            padding: 32px;
+            width: 100%;
+            max-width: 500px;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .modal-card h3 {
+            margin-top: 0;
+            margin-bottom: 24px;
+            font-size: 1.25rem;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Toast container -->
+    <div class="toast-container" id="worker-toast-container" aria-live="polite"></div>
+
+    <!-- ═══ AUTH SCREEN ═══ -->
+    <div class="auth-overlay" id="auth-screen">
+        <div class="auth-card">
+            <img src="SVG/GS-LOGO-SVG-2.svg" alt="GEOSSTORE">
+            <h2>Portal do Trabalhador</h2>
+            <p>Faça login para aceder ao inventário.</p>
+            <form id="login-form">
+                <div class="form-group">
+                    <input type="email" id="login-email" class="form-input" placeholder="E-mail" required>
+                </div>
+                <div class="form-group text-left" style="margin-bottom: 24px;">
+                    <input type="password" id="login-password" class="form-input" placeholder="Palavra-passe" required>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width:100%;">Iniciar Sessão</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ═══ DASHBOARD SCRREN ═══ -->
+    <div class="dashboard-container" id="dashboard-screen">
+        <nav class="top-navbar">
+            <h1>
+                <img src="SVG/GS-LOGO-SVG-2.svg" alt="GS" style="height:24px;filter:invert(1);">
+                INVENTÁRIO E STOCK
+            </h1>
+            <div class="user-control">
+                <span>Bem-vindo, <strong id="worker-name">Trabalhador</strong></span>
+                <button class="btn btn-outline btn-sm" style="border-color:rgba(255,255,255,0.2);color:white;"
+                    onclick="logout()">Sair</button>
+            </div>
+        </nav>
+
+        <div class="main-content">
+            <div class="section-header">
+                <h2>Gestão de Produtos</h2>
+                <div style="display:flex;gap:12px;">
+                    <input type="text" id="search-input" class="form-input" placeholder="Pesquisar produto..."
+                        style="width:250px;">
+                    <button class="btn btn-primary" onclick="loadProducts()">Atualizar</button>
+                </div>
+            </div>
+
+            <div class="data-table-container">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th style="width:60px;">Foto</th>
+                            <th>Produto</th>
+                            <th>Referência / Cor</th>
+                            <th>Tamanhos</th>
+                            <th>Localização</th>
+                            <th>Estado de Stock</th>
+                            <th style="text-align:right;">Acções</th>
+                        </tr>
+                    </thead>
+                    <tbody id="products-table-body">
+                        <!-- Loaded via JS -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══ EDIT MODAL ═══ -->
+    <div class="modal-overlay" id="edit-modal">
+        <div class="modal-card">
+            <h3 id="modal-product-name">Editar Produto</h3>
+            <form id="edit-form">
+                <input type="hidden" id="edit-id">
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label" for="edit-stock">Quantidade no Stock Real</label>
+                        <input type="number" id="edit-stock" class="form-input" required min="0">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="edit-color">Cores / Variações</label>
+                    <input type="text" id="edit-color" class="form-input" placeholder="Ex: Preto/Branco, Vermelho">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="edit-sizes">Tamanhos Disponíveis</label>
+                    <input type="text" id="edit-sizes" class="form-input" placeholder="Ex: 38, 39, 40, 41">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="edit-location">Localização Física / Prateleira</label>
+                    <input type="text" id="edit-location" class="form-input" placeholder="Ex: Armazém A, Prateleira 4">
+                </div>
+
+                <div style="display:flex;gap:12px;justify-content:flex-end;margin-top:24px;">
+                    <button type="button" class="btn btn-outline" onclick="closeModal()">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Guardar Alterações</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- DEPENDENCIES -->
+    <script src="app.js"></script>
+    <script>
+        // Custom Auth specific to worker context
+        let currentWorkerToken = localStorage.getItem('workerToken');
+        let currentProducts = [];
+
+        const authScreen = document.getElementById('auth-screen');
+        const dashboardScreen = document.getElementById('dashboard-screen');
+
+        // Use custom api fetcher for internal usage specifically
+        async function fetchAPI(endpoint, options = {}) {
+            const url = 'http://localhost:3000/api' + endpoint;
+            const headers = {
+                'Content-Type': 'application/json',
+                ...options.headers
+            };
+
+            if (currentWorkerToken) {
+                headers['Authorization'] = `Bearer ${currentWorkerToken}`;
+            }
+
+            const response = await fetch(url, { ...options, headers });
+            const data = await response.json();
+
+            if (!response.ok) {
+                if (response.status === 401 || response.status === 403) logout();
+                throw new Error(data.error || 'Erro na requisição');
+            }
+            return data;
+        }
+
+        // Init
+        document.addEventListener('DOMContentLoaded', () => {
+            if (currentWorkerToken) {
+                showDashboard();
+            } else {
+                showLogin();
+            }
+        });
+
+        function showLogin() {
+            authScreen.style.display = 'flex';
+            dashboardScreen.style.display = 'none';
+        }
+
+        function showDashboard() {
+            authScreen.style.display = 'none';
+            dashboardScreen.style.display = 'flex';
+
+            // Try extracting name from JWT simple payload parse
+            try {
+                const payload = JSON.parse(atob(currentWorkerToken.split('.')[1]));
+                document.getElementById('worker-name').textContent = payload.email.split('@')[0] || 'Trabalhador';
+            } catch (e) { }
+
+            loadProducts();
+        }
+
+        function logout() {
+            currentWorkerToken = null;
+            localStorage.removeItem('workerToken');
+            showLogin();
+        }
+
+        // Login Submit
+        document.getElementById('login-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+
+            try {
+                const res = await fetchAPI('/auth/worker/login', {
+                    method: 'POST',
+                    body: JSON.stringify({ email, password })
+                });
+
+                currentWorkerToken = res.token;
+                localStorage.setItem('workerToken', res.token);
+                GeoToast.show('Bem-vindo!', 'success');
+                showDashboard();
+            } catch (err) {
+                GeoToast.show(err.message, 'error');
+            }
+        });
+
+        // Load Products
+        async function loadProducts() {
+            const search = document.getElementById('search-input').value;
+            const tbody = document.getElementById('products-table-body');
+            tbody.innerHTML = '<tr><td colspan="7" class="text-center text-muted">A carregar produtos...</td></tr>';
+
+            try {
+                const url = search ? `/products?limit=1000&search=${encodeURIComponent(search)}` : `/products?limit=1000`;
+                const data = await fetchAPI(url);
+                currentProducts = data.products;
+
+                if (currentProducts.length > 0) {
+                    tbody.innerHTML = currentProducts.map(p => {
+                        const inStock = p.stock > 0;
+                        const stockColor = inStock ? 'var(--success)' : 'var(--danger)';
+                        const stockText = inStock ? `Em Stock (${p.stock})` : 'Esgotado';
+
+                        return `
+                            <tr>
+                                <td><img src="${p.image_url || 'IMG/GS-LOGO-2.png'}" style="width:40px;height:40px;object-fit:cover;border-radius:6px;border:1px solid var(--border-light);"></td>
+                                <td>
+                                    <strong>${p.name}</strong>
+                                    <div style="font-size:0.75rem;color:var(--text-muted);">${p.brand}</div>
+                                </td>
+                                <td>${p.color || '—'}</td>
+                                <td>${p.sizes || '—'}</td>
+                                <td><span class="badge badge-outline">${p.location || 'Sem Registo'}</span></td>
+                                <td><span style="color:${stockColor};font-weight:600;">●</span> ${stockText}</td>
+                                <td style="text-align:right;">
+                                    <button class="btn btn-primary btn-sm" onclick="openEditModal(${p.id})">Atualizar</button>
+                                </td>
+                            </tr>
+                        `;
+                    }).join('');
+                } else {
+                    tbody.innerHTML = '<tr><td colspan="7" class="text-center text-muted">A pesquisa não retornou resultados.</td></tr>';
+                }
+            } catch (err) {
+                GeoToast.show('Erro ao carregar inventário.', 'error');
+                tbody.innerHTML = '';
+            }
+        }
+
+        // Search Listeners
+        document.getElementById('search-input')?.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') loadProducts();
+        });
+
+        // Edit Modal Logistics
+        const modal = document.getElementById('edit-modal');
+        function openEditModal(id) {
+            const product = currentProducts.find(p => p.id === id);
+            if (!product) return;
+
+            document.getElementById('modal-product-name').textContent = `Atualizar: ${product.name}`;
+            document.getElementById('edit-id').value = id;
+            document.getElementById('edit-stock').value = product.stock || 0;
+            document.getElementById('edit-sizes').value = product.sizes || '';
+            document.getElementById('edit-color').value = product.color || '';
+            document.getElementById('edit-location').value = product.location || '';
+
+            modal.style.display = 'flex';
+        }
+
+        function closeModal() {
+            modal.style.display = 'none';
+        }
+
+        // Form Submit Update
+        document.getElementById('edit-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const id = document.getElementById('edit-id').value;
+
+            const payload = {
+                stock: parseInt(document.getElementById('edit-stock').value),
+                sizes: document.getElementById('edit-sizes').value,
+                color: document.getElementById('edit-color').value,
+                location: document.getElementById('edit-location').value
+            };
+
+            try {
+                await fetchAPI(`/products/${id}/worker`, {
+                    method: 'PATCH',
+                    body: JSON.stringify(payload)
+                });
+
+                GeoToast.show('Inventário atualizado com sucesso!', 'success');
+                closeModal();
+                loadProducts(); // refresh table
+            } catch (err) {
+                GeoToast.show(err.message || 'Falha ao atualizar inventário.', 'error');
+            }
+        });
+
+    </script>
+</body>
+
+</html>

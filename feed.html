@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="pt-AO">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loja — GEOSSTORE | Sneakers Originais em Angola</title>
+    <meta name="description"
+        content="Explore a nossa colecção completa de sneakers originais. Nike, Adidas, Jordan, New Balance e muito mais. Envio para todo Angola.">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="Loja — GEOSSTORE">
+    <meta property="og:description" content="Sneakers originais com envio para todo Angola.">
+    <link rel="icon" href="SVG/GS-LOGO-SVG-2.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+    <!-- ═══ HEADER ═══ -->
+    <header class="site-header" role="banner">
+        <div class="header-inner">
+            <a href="index.html" class="logo" aria-label="GEOSSTORE página inicial">
+                <img src="SVG/GS-LOGO-SVG-2.svg" alt="GEOSSTORE Logo" width="40" height="40">
+            </a>
+
+            <nav class="nav-center" role="navigation" aria-label="Navegação principal">
+                <a href="index.html" class="nav-link">Início</a>
+                <a href="feed.html" class="nav-link active">Loja</a>
+                <a href="feed.html?cat=homem" class="nav-link">Homem</a>
+                <a href="feed.html?cat=mulher" class="nav-link">Mulher</a>
+                <a href="feed.html?cat=crianca" class="nav-link">Criança</a>
+            </nav>
+
+            <div class="header-actions">
+                <button class="header-icon-btn" data-search-toggle aria-label="Pesquisar">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8" />
+                        <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                    </svg>
+                </button>
+                <button class="header-icon-btn" data-open-cart aria-label="Carrinho de compras">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" />
+                        <line x1="3" y1="6" x2="21" y2="6" />
+                        <path d="M16 10a4 4 0 01-8 0" />
+                    </svg>
+                    <span class="cart-count" style="display:none;">0</span>
+                </button>
+                <div class="hamburger" aria-label="Menu" role="button" tabindex="0">
+                    <span></span><span></span><span></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Search expand bar -->
+        <div class="search-expand"
+            style="position:absolute;top:100%;left:0;right:0;background:var(--white);border-bottom:1px solid var(--border-light);padding:16px 24px;display:none;z-index:998;">
+            <div style="max-width:var(--max-width);margin:0 auto;display:flex;gap:12px;align-items:center;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="2">
+                    <circle cx="11" cy="11" r="8" />
+                    <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                </svg>
+                <input type="search" class="form-input" placeholder="Pesquisar sneakers, marcas..." id="search-input"
+                    style="border:none;padding:8px 0;font-size:1rem;" aria-label="Pesquisar produtos">
+                <button data-search-close class="btn-ghost text-sm" aria-label="Fechar pesquisa">Cancelar</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile nav -->
+    <nav class="mobile-nav" role="navigation" aria-label="Navegação móvel">
+        <a href="index.html">Início</a>
+        <a href="feed.html">Loja</a>
+        <a href="feed.html?cat=homem">Homem</a>
+        <a href="feed.html?cat=mulher">Mulher</a>
+        <a href="feed.html?cat=crianca">Criança</a>
+    </nav>
+
+    <main style="margin-top:var(--header-height);">
+
+        <!-- ═══ PAGE HEADER ═══ -->
+        <section
+            style="background:var(--bg-subtle);padding:48px 0 32px;position:relative;overflow:hidden;min-height:280px;display:flex;align-items:center;">
+
+            <!-- [VÍDEO/IMAGEM DE FUNDO] Descomente e adicione o seu link de media abaixo -->
+            <!-- <video src="CAMINHO_DO_VIDEO.mp4" autoplay loop muted playsinline class="hero-bg-media"></video> -->
+            <!-- <img src="CAMINHO_DA_IMAGEM.jpg" alt="Fundo" class="hero-bg-media"> -->
+            <div class="hero-bg-fade"></div>
+
+            <div class="container" style="position:relative;z-index:2;width:100%;">
+                <nav class="breadcrumb" aria-label="Breadcrumb">
+                    <a href="index.html">Início</a>
+                    <span class="separator">›</span>
+                    <span id="breadcrumb-current">Todos os Produtos</span>
+                </nav>
+                <h1 class="fade-up" id="page-title">Todos os Produtos</h1>
+                <p class="fade-up" id="page-subtitle" style="margin-top:8px;">Explore a nossa colecção completa de
+                    sneakers originais.</p>
+            </div>
+        </section>
+
+        <!-- ═══ FILTERS ═══ -->
+        <section class="container">
+            <div class="filters-bar">
+                <div class="filter-tabs" id="category-filters" role="tablist">
+                    <button class="filter-tab active" data-filter="todos" role="tab" aria-selected="true">Todos</button>
+                    <button class="filter-tab" data-filter="homem" role="tab">Homem</button>
+                    <button class="filter-tab" data-filter="mulher" role="tab">Mulher</button>
+                    <button class="filter-tab" data-filter="crianca" role="tab">Criança</button>
+                    <button class="filter-tab" data-filter="novidade" role="tab">Novidades</button>
+                    <button class="filter-tab" data-filter="promocao" role="tab">Promoções</button>
+                </div>
+                <div style="display:flex;align-items:center;gap:12px;">
+                    <span class="text-sm text-muted" id="results-count">A carregar...</span>
+                    <select class="sort-select form-select form-input" id="sort-select" aria-label="Ordenar produtos">
+                        <option value="recentes">Mais Recentes</option>
+                        <option value="preco-asc">Preço: Menor → Maior</option>
+                        <option value="preco-desc">Preço: Maior → Menor</option>
+                        <option value="nome">Nome A–Z</option>
+                        <option value="popular">Mais Popular</option>
+                    </select>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══ PRODUCT GRID ═══ -->
+        <section class="section-sm">
+            <div class="container">
+                <div class="product-grid stagger-children" id="product-grid">
+                    <!-- Products will be loaded from database -->
+                    <p class="text-center text-muted" style="grid-column:1/-1;padding:80px 0;">A carregar produtos...
+                    </p>
+                </div>
+
+                <!-- Pagination -->
+                <div id="pagination" style="display:flex;justify-content:center;gap:8px;margin-top:48px;">
+                    <!-- Pagination buttons rendered by JS when connected to DB -->
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ═══ FOOTER ═══ -->
+    <footer class="site-footer" role="contentinfo">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <img src="SVG/GS-LOGO-SVG-2.svg" alt="GEOSSTORE" width="48" height="48">
+                    <p>A loja número 1 de sneakers em Angola. Viana, Luanda-Sul. Envio para todo o país.</p>
+                </div>
+                <div class="footer-col">
+                    <h5>Loja</h5>
+                    <a href="feed.html">Todos os Produtos</a>
+                    <a href="feed.html?cat=homem">Homem</a>
+                    <a href="feed.html?cat=mulher">Mulher</a>
+                    <a href="feed.html?cat=crianca">Criança</a>
+                </div>
+                <div class="footer-col">
+                    <h5>Informação</h5>
+                    <a href="index.html#about">Sobre Nós</a>
+                    <a href="envio.html">Política de Envio</a>
+                    <a href="devolucoes.html">Trocas e Devoluções</a>
+                    <a href="termos.html">Termos e Condições</a>
+                </div>
+                <div class="footer-col">
+                    <h5>Contacto</h5>
+                    <a href="tel:+244931252524">+244 931 252 524</a>
+                    <a href="https://www.instagram.com/geosstore_/" target="_blank" rel="noopener">Instagram</a>
+                    <a>📍 Estrada da Vila, Luanda-Sul, Viana</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; <span class="dynamic-year">2026</span> GEOSSTORE. Todos os direitos reservados.</p>
+                <div class="footer-social">
+                    <a href="https://www.instagram.com/geosstore_/" target="_blank" rel="noopener"
+                        aria-label="Instagram">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+                            <path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z" />
+                            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ═══ CART DRAWER ═══ -->
+    <div class="cart-overlay" aria-hidden="true"></div>
+    <aside class="cart-drawer" role="dialog" aria-label="Carrinho de compras">
+        <div class="cart-drawer-header">
+            <h3>Carrinho</h3>
+            <button class="cart-close-btn" data-close-cart aria-label="Fechar carrinho">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="18" y1="6" x2="6" y2="18" />
+                    <line x1="6" y1="6" x2="18" y2="18" />
+                </svg>
+            </button>
+        </div>
+        <div class="cart-drawer-body"></div>
+        <div class="cart-drawer-footer"></div>
+    </aside>
+
+    <div class="toast-container" aria-live="polite"></div>
+
+    <script src="app.js"></script>
+    <script>
+        // ── State ──
+        let currentCategory = 'todos';
+        let currentSort = 'recentes';
+        let currentSearch = '';
+        let currentPage = 1;
+
+        // ── Search Toggle ──
+        document.querySelector('[data-search-toggle]')?.addEventListener('click', () => {
+            const bar = document.querySelector('.search-expand');
+            if (bar) {
+                bar.style.display = bar.style.display === 'none' ? 'block' : 'none';
+                const input = bar.querySelector('input');
+                if (input && bar.style.display === 'block') input.focus();
+            }
+        });
+        document.querySelector('[data-search-close]')?.addEventListener('click', () => {
+            const bar = document.querySelector('.search-expand');
+            if (bar) bar.style.display = 'none';
+        });
+
+        // ── URL Params — set active category ──
+        const params = new URLSearchParams(window.location.search);
+        const cat = params.get('cat');
+        if (cat) {
+            currentCategory = cat;
+            document.querySelectorAll('.filter-tab').forEach(t => {
+                t.classList.toggle('active', t.dataset.filter === cat);
+            });
+            const titles = {
+                homem: 'Colecção Masculina',
+                mulher: 'Colecção Feminina',
+                crianca: 'Colecção Infantil'
+            };
+            if (titles[cat]) {
+                document.getElementById('page-title').textContent = titles[cat];
+                document.getElementById('breadcrumb-current').textContent = titles[cat];
+            }
+        }
+
+        // ── Load Products from API ──
+        async function loadProducts() {
+            const grid = document.getElementById('product-grid');
+            const countEl = document.getElementById('results-count');
+            const paginationEl = document.getElementById('pagination');
+            grid.innerHTML = '<p class="text-center text-muted" style="grid-column:1/-1;padding:80px 0;">A carregar produtos...</p>';
+
+            try {
+                let endpoint = `/products?page=${currentPage}&limit=12&sort=${currentSort}`;
+
+                if (currentCategory === 'novidade') {
+                    endpoint += '&is_new=true';
+                } else if (currentCategory === 'promocao') {
+                    // Products with old_price (on sale) — we filter client-side or add API param
+                    endpoint += '&sort=preco-asc';
+                } else if (currentCategory !== 'todos') {
+                    endpoint += `&category=${currentCategory}`;
+                }
+
+                if (currentSearch) {
+                    endpoint += `&search=${encodeURIComponent(currentSearch)}`;
+                }
+
+                const data = await GeoAPI.get(endpoint);
+
+                let products = data.products;
+                // Client-side filter for promotions (products with old_price)
+                if (currentCategory === 'promocao') {
+                    products = products.filter(p => p.old_price && p.old_price > p.price);
+                }
+
+                if (products.length > 0) {
+                    grid.innerHTML = products.map(p => GeoUtils.renderProductCard(p)).join('');
+                    countEl.textContent = `${data.total} produto${data.total !== 1 ? 's' : ''} encontrado${data.total !== 1 ? 's' : ''}`;
+
+                    // Pagination
+                    if (data.totalPages > 1) {
+                        let paginationHTML = '';
+                        if (currentPage > 1) {
+                            paginationHTML += `<button class="btn btn-outline btn-sm" onclick="goToPage(${currentPage - 1})">←</button>`;
+                        }
+                        for (let i = 1; i <= data.totalPages; i++) {
+                            paginationHTML += `<button class="btn ${i === currentPage ? 'btn-primary' : 'btn-outline'} btn-sm" onclick="goToPage(${i})">${i}</button>`;
+                        }
+                        if (currentPage < data.totalPages) {
+                            paginationHTML += `<button class="btn btn-outline btn-sm" onclick="goToPage(${currentPage + 1})">→</button>`;
+                        }
+                        paginationEl.innerHTML = paginationHTML;
+                    } else {
+                        paginationEl.innerHTML = '';
+                    }
+
+                    GeoScroll.init();
+                } else {
+                    grid.innerHTML = '<p class="text-center text-muted" style="grid-column:1/-1;padding:80px 0;">Nenhum produto encontrado.</p>';
+                    countEl.textContent = '0 produtos';
+                    paginationEl.innerHTML = '';
+                }
+            } catch (err) {
+                console.error('Error loading products:', err);
+                grid.innerHTML = '<p class="text-center text-muted" style="grid-column:1/-1;padding:80px 0;">Não foi possível carregar os produtos.</p>';
+            }
+        }
+
+        function goToPage(page) {
+            currentPage = page;
+            loadProducts();
+            window.scrollTo({ top: 300, behavior: 'smooth' });
+        }
+
+        // ── Filter Tabs ──
+        document.querySelectorAll('.filter-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.filter-tab').forEach(t => {
+                    t.classList.remove('active');
+                    t.setAttribute('aria-selected', 'false');
+                });
+                tab.classList.add('active');
+                tab.setAttribute('aria-selected', 'true');
+                currentCategory = tab.dataset.filter;
+                currentPage = 1;
+
+                const titles = {
+                    todos: 'Todos os Produtos',
+                    homem: 'Colecção Masculina',
+                    mulher: 'Colecção Feminina',
+                    crianca: 'Colecção Infantil',
+                    novidade: 'Novidades',
+                    promocao: 'Promoções'
+                };
+                document.getElementById('page-title').textContent = titles[currentCategory] || 'Loja';
+                document.getElementById('breadcrumb-current').textContent = titles[currentCategory] || 'Loja';
+
+                // Sync with URL and Top Navigation
+                const newUrl = currentCategory === 'todos' ? window.location.pathname : '?cat=' + currentCategory;
+                window.history.pushState({}, '', newUrl);
+                if (typeof GeoNavigation !== 'undefined') {
+                    GeoNavigation.init();
+                }
+
+                loadProducts();
+            });
+        });
+
+        // ── Sort Select ──
+        document.getElementById('sort-select')?.addEventListener('change', (e) => {
+            currentSort = e.target.value;
+            currentPage = 1;
+            loadProducts();
+        });
+
+        // ── Search Input ──
+        const searchInput = document.getElementById('search-input');
+        if (searchInput) {
+            searchInput.addEventListener('input', GeoUtils.debounce((e) => {
+                currentSearch = e.target.value;
+                currentPage = 1;
+                loadProducts();
+            }, 400));
+        }
+
+        // Init
+        loadProducts();
+    </script>
+
+</body>
+
+</html>

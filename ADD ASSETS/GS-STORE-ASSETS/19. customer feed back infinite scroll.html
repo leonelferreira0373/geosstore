@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marquee • Infinite Scroll Magic</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+        }
+
+        .marquee-container {
+            mask-image: linear-gradient(to bottom,
+                    transparent 0%,
+                    black 10%,
+                    black 90%,
+                    transparent 100%);
+        }
+
+        @keyframes marquee-vertical {
+            from {
+                transform: translateY(0);
+            }
+
+            to {
+                transform: translateY(-50%);
+            }
+        }
+
+        .animate-marquee-vertical {
+            animation: marquee-vertical var(--duration, 25s) linear infinite;
+        }
+
+        .pause-hover:hover .animate-marquee-vertical {
+            animation-play-state: paused;
+        }
+
+        .review-card {
+            transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .review-card:hover {
+            transform: scale(1.03) translateY(-4px);
+            box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.4);
+        }
+    </style>
+</head>
+
+<body class="bg-zinc-950 text-white min-h-screen py-20 overflow-hidden">
+    <div class="max-w-6xl mx-auto px-6">
+        <!-- Header -->
+        <div class="text-center mb-16">
+            <div class="inline-flex items-center gap-3 px-5 py-2 rounded-full border border-white/10 bg-white/5 mb-6">
+                <div class="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></div>
+                <span class="text-sm font-medium tracking-widest">INFINITE MARQUEE</span>
+            </div>
+            <h1 class="text-6xl md:text-7xl font-semibold tracking-tighter">
+                Scroll that never ends
+            </h1>
+            <p class="mt-4 text-zinc-400 text-xl">Hover to pause • Pure vanilla magic</p>
+        </div>
+
+        <!-- Vertical Marquee (Main Demo) -->
+        <div
+            class="relative h-[620px] flex items-center justify-center overflow-hidden rounded-3xl border border-white/10 bg-zinc-900">
+            <div class="marquee-container pause-hover absolute inset-0 flex gap-6">
+                <!-- Column 1 -->
+                <div id="col1" class="animate-marquee-vertical flex flex-col gap-6 min-w-[320px]">
+                    <!-- Duplicated for seamless loop -->
+                </div>
+
+                <!-- Column 2 (reverse) -->
+                <div id="col2" class="animate-marquee-vertical flex flex-col gap-6 min-w-[320px]"
+                    style="animation-direction: reverse; --duration: 32s;">
+                    <!-- Duplicated for seamless loop -->
+                </div>
+            </div>
+
+            <!-- Subtle overlay gradients -->
+            <div
+                class="pointer-events-none absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-zinc-950 to-transparent">
+            </div>
+            <div
+                class="pointer-events-none absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-zinc-950 to-transparent">
+            </div>
+        </div>
+
+        <!-- Horizontal Marquee (Bonus) -->
+        <div class="mt-20">
+            <p class="text-zinc-500 text-sm mb-6 font-mono text-center">HORIZONTAL VERSION ↓</p>
+            <div class="overflow-hidden py-8 border-y border-white/10">
+                <div id="horizontalMarquee" class="flex gap-8 whitespace-nowrap">
+                    <!-- Content added by JS -->
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center mt-16 text-zinc-500 text-sm">
+            Hover anywhere on the marquee to pause • Built with zero dependencies
+        </div>
+    </div>
+
+    <script>
+        // Tailwind ready
+        tailwind.config = { content: [], theme: { extend: {} } };
+
+        // Sample reviews
+        const reviews = [
+            { name: "Alex Rivera", username: "@arivera", body: "This is the smoothest infinite scroll I've ever seen. Mind blown.", img: "https://picsum.photos/id/64/64" },
+            { name: "Sam Chen", username: "@samchen", body: "The pause-on-hover is chef's kiss. Finally a marquee that feels premium.", img: "https://picsum.photos/id/91/64" },
+            { name: "Jordan Kim", username: "@jordank", body: "Used it in my landing page and conversion went up 40%. Insane.", img: "https://picsum.photos/id/201/64" },
+            { name: "Taylor Brooks", username: "@taybrooks", body: "The vertical version is perfect for testimonials. Love it.", img: "https://picsum.photos/id/238/64" },
+            { name: "Casey Morgan", username: "@caseym", body: "This should be the default marquee for every design system.", img: "https://picsum.photos/id/669/64" },
+        ];
+
+        // Populate vertical columns
+        function createReviewCard(review) {
+            const card = document.createElement('div');
+            card.className = `review-card bg-zinc-900 border border-white/10 rounded-2xl p-6 w-full`;
+            card.innerHTML = `
+                <div class="flex items-center gap-3">
+                    <img src="${review.img}" class="w-9 h-9 rounded-full object-cover ring-2 ring-white/10">
+                    <div>
+                        <div class="font-semibold">${review.name}</div>
+                        <div class="text-emerald-400 text-xs">${review.username}</div>
+                    </div>
+                </div>
+                <blockquote class="mt-6 text-zinc-300 text-[15px] leading-relaxed">
+                    “${review.body}”
+                </blockquote>
+            `;
+            return card;
+        }
+
+        // Vertical marquee
+        const col1 = document.getElementById('col1');
+        const col2 = document.getElementById('col2');
+
+        // Fill both columns with duplicated content
+        reviews.forEach(review => {
+            col1.appendChild(createReviewCard(review));
+            col2.appendChild(createReviewCard(review));
+        });
+        // Duplicate again for seamless infinite loop
+        reviews.forEach(review => {
+            col1.appendChild(createReviewCard(review));
+            col2.appendChild(createReviewCard(review));
+        });
+
+        // Horizontal marquee
+        const horizontal = document.getElementById('horizontalMarquee');
+        const horizontalContent = document.createElement('div');
+        horizontalContent.className = "flex gap-8 animate-[marquee_35s_linear_infinite]";
+        horizontalContent.style.animation = "marquee 35s linear infinite";
+
+        reviews.forEach((review, i) => {
+            const item = document.createElement('div');
+            item.className = "flex-shrink-0 flex items-center gap-4 bg-zinc-900 border border-white/10 rounded-2xl px-8 py-4";
+            item.innerHTML = `
+                <img src="${review.img}" class="w-8 h-8 rounded-full">
+                <div>
+                    <div class="font-medium">${review.name}</div>
+                    <div class="text-xs text-zinc-400">${review.username}</div>
+                </div>
+            `;
+            horizontalContent.appendChild(item);
+        });
+
+        // Duplicate for seamless horizontal
+        reviews.forEach((review, i) => {
+            const item = document.createElement('div');
+            item.className = "flex-shrink-0 flex items-center gap-4 bg-zinc-900 border border-white/10 rounded-2xl px-8 py-4";
+            item.innerHTML = `
+                <img src="${review.img}" class="w-8 h-8 rounded-full">
+                <div>
+                    <div class="font-medium">${review.name}</div>
+                    <div class="text-xs text-zinc-400">${review.username}</div>
+                </div>
+            `;
+            horizontalContent.appendChild(item);
+        });
+
+        horizontal.appendChild(horizontalContent);
+
+        // Add custom horizontal keyframe
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes marquee {
+                from { transform: translateX(0); }
+                to { transform: translateX(-50%); }
+            }
+        `;
+        document.head.appendChild(style);
+
+        console.log("%cMarquee Standalone Ready ✨ Hover to pause • No React • No install",
+            "color:#22d3ee; font-family:monospace; font-size:13px");
+    </script>
+</body>
+
+</html>

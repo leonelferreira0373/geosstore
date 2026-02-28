@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="pt-AO">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GEOSSTORE — A Loja Nº1 de Sneakers em Angola</title>
+    <meta name="description"
+        content="GEOSSTORE NAS MANGAS — Loja número 1 de sneakers em Angola. Mais de 2.000 vendas. Enviamos para todo o país. Nike, Adidas, Jordan e muito mais.">
+    <meta name="keywords"
+        content="sneakers Angola, comprar ténis Luanda, Nike Angola, Adidas Angola, Jordan Angola, sapatos originais, GEOSSTORE">
+    <meta name="author" content="GEOSSTORE">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="GEOSSTORE — A Loja Nº1 de Sneakers em Angola">
+    <meta property="og:description" content="Mais de 2.000 vendas. Sneakers originais com envio para todo o país.">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="pt_AO">
+    <link rel="icon" href="SVG/GS-LOGO-SVG-2.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+    <!-- ═══ HEADER ═══ -->
+    <header class="site-header" role="banner">
+        <div class="header-inner">
+            <a href="index.html" class="logo" aria-label="GEOSSTORE página inicial">
+                <img src="SVG/GS-LOGO-SVG-2.svg" alt="GEOSSTORE Logo" width="40" height="40">
+            </a>
+
+            <nav class="nav-center" role="navigation" aria-label="Navegação principal">
+                <a href="index.html" class="nav-link active">Início</a>
+                <a href="feed.html" class="nav-link">Loja</a>
+                <a href="feed.html?cat=homem" class="nav-link">Homem</a>
+                <a href="feed.html?cat=mulher" class="nav-link">Mulher</a>
+                <a href="feed.html?cat=crianca" class="nav-link">Criança</a>
+            </nav>
+
+            <div class="header-actions">
+                <button class="header-icon-btn" data-search-toggle aria-label="Pesquisar">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8" />
+                        <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                    </svg>
+                </button>
+                <a href="conta.html" class="header-icon-btn" aria-label="A Minha Conta">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" />
+                        <circle cx="12" cy="7" r="4" />
+                    </svg>
+                </a>
+                <button class="header-icon-btn" data-open-cart aria-label="Carrinho de compras">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" />
+                        <line x1="3" y1="6" x2="21" y2="6" />
+                        <path d="M16 10a4 4 0 01-8 0" />
+                    </svg>
+                    <span class="cart-count" style="display:none;">0</span>
+                </button>
+                <div class="hamburger" aria-label="Menu" role="button" tabindex="0">
+                    <span></span><span></span><span></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Search expand bar -->
+        <div class="search-expand"
+            style="position:absolute;top:100%;left:0;right:0;background:var(--white);border-bottom:1px solid var(--border-light);padding:16px 24px;display:none;z-index:998;">
+            <div style="max-width:var(--max-width);margin:0 auto;display:flex;gap:12px;align-items:center;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="2">
+                    <circle cx="11" cy="11" r="8" />
+                    <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                </svg>
+                <input type="search" class="form-input" placeholder="Pesquisar sneakers, marcas..."
+                    style="border:none;padding:8px 0;font-size:1rem;" aria-label="Pesquisar produtos">
+                <button data-search-close class="btn-ghost text-sm" aria-label="Fechar pesquisa">Cancelar</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile nav -->
+    <nav class="mobile-nav" role="navigation" aria-label="Navegação móvel">
+        <a href="index.html">Início</a>
+        <a href="feed.html">Loja</a>
+        <a href="feed.html?cat=homem">Homem</a>
+        <a href="feed.html?cat=mulher">Mulher</a>
+        <a href="feed.html?cat=crianca">Criança</a>
+    </nav>
+
+    <main>
+        <!-- ═══ HERO SECTION ═══ -->
+        <section class="hero" aria-label="Destaque principal">
+
+            <!-- [VÍDEO/IMAGEM DE FUNDO] Descomente e adicione o seu link de media abaixo -->
+            <!-- <video src="CAMINHO_DO_VIDEO.mp4" autoplay loop muted playsinline class="hero-bg-media"></video> -->
+            <!-- <img src="CAMINHO_DA_IMAGEM.jpg" alt="Fundo" class="hero-bg-media"> -->
+            <div class="hero-bg-fade"></div>
+
+            <div class="hero-content fade-up" style="position:relative; z-index:2;">
+                <div class="hero-label">
+                    <span class="dot"></span>
+                    <span>Mais de 2.000 vendas</span>
+                </div>
+                <h1>A Loja Nº1<br>de Sneakers<br>em Angola.</h1>
+                <p>Sneakers originais das melhores marcas do mundo. Envio para todo o país.</p>
+                <div class="hero-buttons">
+                    <a href="feed.html" class="btn btn-primary btn-lg" id="hero-cta-shop">Explorar Loja</a>
+                    <a href="#novidades" class="btn btn-outline btn-lg" id="hero-cta-new">Novidades</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══ BRANDS MARQUEE ═══ -->
+        <div class="brands-bar" aria-label="Marcas disponíveis">
+            <div class="brands-track" id="brands-track">
+                <!-- Duplicated for seamless loop -->
+                <span>NIKE</span><span>ADIDAS</span><span>JORDAN</span><span>NEW
+                    BALANCE</span><span>PUMA</span><span>CONVERSE</span><span>VANS</span><span>REEBOK</span><span>ASICS</span><span>FILA</span>
+                <span>NIKE</span><span>ADIDAS</span><span>JORDAN</span><span>NEW
+                    BALANCE</span><span>PUMA</span><span>CONVERSE</span><span>VANS</span><span>REEBOK</span><span>ASICS</span><span>FILA</span>
+            </div>
+        </div>
+
+        <!-- ═══ FEATURED PRODUCTS ═══ -->
+        <section class="section" id="novidades" aria-label="Novidades">
+            <div class="container">
+                <div class="fade-up" style="text-align:center;margin-bottom:48px;">
+                    <h2>Novidades</h2>
+                    <p>Os modelos mais recentes acabados de chegar.</p>
+                </div>
+                <div class="product-grid stagger-children" id="featured-products">
+                    <!-- Products loaded from database -->
+                    <p class="text-center text-muted" style="grid-column:1/-1;padding:60px 0;">A carregar produtos...
+                    </p>
+                </div>
+                <div class="text-center" style="margin-top:40px;">
+                    <a href="feed.html" class="btn btn-outline" id="cta-view-all">Ver Todos os Produtos</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══ CATEGORIES ═══ -->
+        <section class="section" style="background:var(--bg-subtle);" aria-label="Categorias">
+            <div class="container">
+                <div class="fade-up" style="text-align:center;margin-bottom:48px;">
+                    <h2>Comprar por Categoria</h2>
+                    <p>Encontre o par perfeito para si.</p>
+                </div>
+                <div class="stagger-children"
+                    style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px;">
+
+                    <a href="feed.html?cat=homem" class="category-card" id="cat-homem"
+                        style="position:relative;display:flex;align-items:flex-end;min-height:360px;border-radius:var(--radius-lg);overflow:hidden;background:var(--bg-light);transition:transform 0.4s ease,box-shadow 0.4s ease;">
+                        <div
+                            style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.7) 0%,transparent 60%);z-index:1;">
+                        </div>
+                        <div style="position:relative;z-index:2;padding:32px;">
+                            <span class="badge badge-black" style="margin-bottom:12px;">Homem</span>
+                            <h3 style="color:white;font-size:1.5rem;">Colecção Masculina</h3>
+                            <p style="color:rgba(255,255,255,0.7);font-size:0.85rem;">Explorar →</p>
+                        </div>
+                    </a>
+
+                    <a href="feed.html?cat=mulher" class="category-card" id="cat-mulher"
+                        style="position:relative;display:flex;align-items:flex-end;min-height:360px;border-radius:var(--radius-lg);overflow:hidden;background:var(--bg-light);transition:transform 0.4s ease,box-shadow 0.4s ease;">
+                        <div
+                            style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.7) 0%,transparent 60%);z-index:1;">
+                        </div>
+                        <div style="position:relative;z-index:2;padding:32px;">
+                            <span class="badge badge-black" style="margin-bottom:12px;">Mulher</span>
+                            <h3 style="color:white;font-size:1.5rem;">Colecção Feminina</h3>
+                            <p style="color:rgba(255,255,255,0.7);font-size:0.85rem;">Explorar →</p>
+                        </div>
+                    </a>
+
+                    <a href="feed.html?cat=crianca" class="category-card" id="cat-crianca"
+                        style="position:relative;display:flex;align-items:flex-end;min-height:360px;border-radius:var(--radius-lg);overflow:hidden;background:var(--bg-light);transition:transform 0.4s ease,box-shadow 0.4s ease;">
+                        <div
+                            style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.7) 0%,transparent 60%);z-index:1;">
+                        </div>
+                        <div style="position:relative;z-index:2;padding:32px;">
+                            <span class="badge badge-black" style="margin-bottom:12px;">Criança</span>
+                            <h3 style="color:white;font-size:1.5rem;">Colecção Infantil</h3>
+                            <p style="color:rgba(255,255,255,0.7);font-size:0.85rem;">Explorar →</p>
+                        </div>
+                    </a>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══ ABOUT / BRAND STORY ═══ -->
+        <section class="section" aria-label="Sobre nós">
+            <div class="container" style="display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;">
+                <div class="fade-up">
+                    <span class="badge badge-outline" style="margin-bottom:16px;">Sobre Nós</span>
+                    <h2 style="margin-bottom:16px;">GEOSSTORE<br>Nas Mangas</h2>
+                    <p style="margin-bottom:16px;">Somos a loja número 1 de sneakers em Angola. Com mais de 2.000 vendas
+                        e clientes satisfeitos em todo o país, trabalhamos para trazer os melhores modelos directamente
+                        para si.</p>
+                    <p style="margin-bottom:24px;">Localizada em Viana, Luanda-Sul, enviamos para qualquer canto de
+                        Angola com segurança e rapidez.</p>
+                    <div style="display:flex;gap:40px;">
+                        <div>
+                            <div style="font-size:2rem;font-weight:700;color:var(--black);">2.000+</div>
+                            <div class="text-sm text-muted">Vendas</div>
+                        </div>
+                        <div>
+                            <div style="font-size:2rem;font-weight:700;color:var(--black);">📦</div>
+                            <div class="text-sm text-muted">Envio Nacional</div>
+                        </div>
+                        <div>
+                            <div style="font-size:2rem;font-weight:700;color:var(--black);">⭐</div>
+                            <div class="text-sm text-muted">100% Original</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="slide-in-right"
+                    style="background:var(--bg-light);border-radius:var(--radius-xl);aspect-ratio:1/1;display:flex;align-items:center;justify-content:center;overflow:hidden;">
+                    <img src="SVG/GS-LOGO-SVG-2.svg" alt="GEOSSTORE Logo" style="width:60%;opacity:0.15;">
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══ SOCIAL PROOF / TRUST ═══ -->
+        <section class="section" style="background:var(--bg-subtle);overflow:hidden;" aria-label="Prova social">
+            <div class="container">
+                <div class="fade-up text-center" style="margin-bottom:32px;">
+                    <div
+                        style="display:inline-flex;align-items:center;gap:8px;padding:8px 16px;border-radius:50px;border:1px solid var(--border-light);background:var(--white);margin-bottom:24px;">
+                        <span
+                            style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#2e7d32;animation:pulse 2s infinite;"></span>
+                        <span
+                            style="font-size:0.75rem;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;">Feedback
+                            Em Tempo Real</span>
+                    </div>
+                    <h2>O Que Dizem os Nossos Clientes</h2>
+                    <p style="margin-top:12px;color:var(--text-muted);">Mais de 2.000 clientes satisfeitos em Angola.
+                    </p>
+                </div>
+
+                <!-- Infinite Scroll Marquee -->
+                <div class="relative"
+                    style="height:550px;display:flex;align-items:center;justify-content:center;position:relative;border-radius:var(--radius-xl);overflow:hidden;background:var(--bg-light);border:1px solid var(--border-light);">
+                    <div class="marquee-container-vert pause-hover"
+                        style="position:absolute;inset:0;display:flex;gap:24px;padding:0 24px;">
+
+                        <!-- Column 1 -->
+                        <div id="marquee-col1" class="animate-marquee-vertical"
+                            style="display:flex;flex-direction:column;gap:24px;min-width:300px;flex:1;">
+                            <!-- Content injected via JS -->
+                        </div>
+
+                        <!-- Column 2 (reverse) -->
+                        <div id="marquee-col2" class="animate-marquee-vertical"
+                            style="display:flex;flex-direction:column;gap:24px;min-width:300px;flex:1;animation-direction:reverse;--duration:32s;">
+                            <!-- Content injected via JS -->
+                        </div>
+
+                    </div>
+
+                    <!-- Fade overlays -->
+                    <div
+                        style="pointer-events:none;position:absolute;top:0;left:0;right:0;height:120px;background:linear-gradient(to bottom,var(--bg-subtle),transparent);z-index:2;">
+                    </div>
+                    <div
+                        style="pointer-events:none;position:absolute;bottom:0;left:0;right:0;height:120px;background:linear-gradient(to top,var(--bg-subtle),transparent);z-index:2;">
+                    </div>
+
+                    <!-- CTA Overlay -->
+                    <div style="position:absolute;z-index:3;bottom:32px;text-align:center;">
+                        <a href="conta.html" class="btn btn-primary btn-lg" style="box-shadow:var(--shadow-lg);">Deixe a
+                            Sua Avaliação</a>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ═══ INSTAGRAM / SOCIAL ═══ -->
+        <section class="section" aria-label="Instagram">
+            <div class="container text-center fade-up">
+                <span class="badge badge-outline" style="margin-bottom:16px;">@geosstore_</span>
+                <h2 style="margin-bottom:12px;">Siga-nos no Instagram</h2>
+                <p style="margin-bottom:32px;">Acompanhe as últimas novidades e lançamentos.</p>
+                <a href="https://www.instagram.com/geosstore_/" target="_blank" rel="noopener noreferrer"
+                    class="btn btn-primary" id="cta-instagram">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+                        <path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z" />
+                        <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+                    </svg>
+                    Seguir @geosstore_
+                </a>
+            </div>
+        </section>
+
+        <!-- ═══ NEWSLETTER ═══ -->
+        <section class="newsletter" aria-label="Newsletter">
+            <div class="container text-center fade-up">
+                <h2>Fique a Par das Novidades</h2>
+                <p>Inscreva-se e receba ofertas exclusivas e lançamentos antes de todos.</p>
+                <form class="newsletter-form" id="newsletter-form" aria-label="Formulário de newsletter">
+                    <input type="email" placeholder="O seu e-mail" required aria-label="Endereço de e-mail">
+                    <button type="submit">Inscrever</button>
+                </form>
+                <p class="text-xs" style="color:rgba(255,255,255,0.3);margin-top:12px;">Não enviamos spam. Pode cancelar
+                    a qualquer momento.</p>
+            </div>
+        </section>
+    </main>
+
+    <!-- ═══ FOOTER ═══ -->
+    <footer class="site-footer" role="contentinfo">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <img src="SVG/GS-LOGO-SVG-2.svg" alt="GEOSSTORE" width="48" height="48">
+                    <p>A loja número 1 de sneakers em Angola. Viana, Luanda-Sul. Envio para todo o país.</p>
+                    <p style="margin-top:8px;"><a href="tel:+244931252524" style="color:var(--text-muted);">+244 931 252
+                            524</a> | <a href="tel:+244931252573" style="color:var(--text-muted);">+244 931 252 573</a>
+                    </p>
+                </div>
+                <div class="footer-col">
+                    <h5>Loja</h5>
+                    <a href="feed.html">Todos os Produtos</a>
+                    <a href="feed.html?cat=homem">Homem</a>
+                    <a href="feed.html?cat=mulher">Mulher</a>
+                    <a href="feed.html?cat=crianca">Criança</a>
+                </div>
+                <div class="footer-col">
+                    <h5>Informação</h5>
+                    <a href="index.html#about">Sobre Nós</a>
+                    <a href="envio.html">Política de Envio</a>
+                    <a href="devolucoes.html">Trocas e Devoluções</a>
+                    <a href="termos.html">Termos e Condições</a>
+                </div>
+                <div class="footer-col" style="min-width: 250px;">
+                    <h5>Contacto</h5>
+                    <a href="mailto:info@geosstore.ao">info@geosstore.ao</a>
+                    <a href="https://www.instagram.com/geosstore_/" target="_blank" rel="noopener">Instagram</a>
+                    <a href="https://wa.me/244931252524" target="_blank" rel="noopener">WhatsApp</a>
+                    <div
+                        style="margin-top: 12px; border-radius: var(--radius-sm); overflow: hidden; border: 1px solid var(--border-light);">
+                        <iframe
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15764.571430043516!2d13.313889!3d-8.918056!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1a51f0b000000001%3A0x6d11f7c9e782f9d!2sViana%2C%20Luanda%2CSul!5e0!3m2!1spt-PT!2sao!4v1700000000000!5m2!1spt-PT!2sao"
+                            width="100%" height="150" style="border:0; display: block;" allowfullscreen=""
+                            loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+                            title="Mapa para GEOSSTORE em Luanda Sul, Viana">
+                        </iframe>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; <span class="dynamic-year">2026</span> GEOSSTORE. Todos os direitos reservados.</p>
+                <div class="footer-social">
+                    <a href="https://www.instagram.com/geosstore_/" target="_blank" rel="noopener"
+                        aria-label="Instagram">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+                            <path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z" />
+                            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+                        </svg>
+                    </a>
+                    <a href="https://wa.me/244931252524" target="_blank" rel="noopener" aria-label="WhatsApp">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path
+                                d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ═══ CART DRAWER ═══ -->
+    <div class="cart-overlay" aria-hidden="true"></div>
+    <aside class="cart-drawer" role="dialog" aria-label="Carrinho de compras">
+        <div class="cart-drawer-header">
+            <h3>Carrinho</h3>
+            <button class="cart-close-btn" data-close-cart aria-label="Fechar carrinho">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="18" y1="6" x2="6" y2="18" />
+                    <line x1="6" y1="6" x2="18" y2="18" />
+                </svg>
+            </button>
+        </div>
+        <div class="cart-drawer-body"></div>
+        <div class="cart-drawer-footer"></div>
+    </aside>
+
+    <!-- Toast container -->
+    <div class="toast-container" aria-live="polite"></div>
+
+    <script src="app.js"></script>
+    <script>
+        // Search expand toggle
+        document.querySelector('[data-search-toggle]')?.addEventListener('click', () => {
+            const bar = document.querySelector('.search-expand');
+            if (bar) {
+                bar.style.display = bar.style.display === 'none' ? 'block' : 'none';
+                const input = bar.querySelector('input');
+                if (input && bar.style.display === 'block') input.focus();
+            }
+        });
+        document.querySelector('[data-search-close]')?.addEventListener('click', () => {
+            const bar = document.querySelector('.search-expand');
+            if (bar) bar.style.display = 'none';
+        });
+
+        // ── Load Featured Products from API ──
+        async function loadFeaturedProducts() {
+            const grid = document.getElementById('featured-products');
+            try {
+                const data = await GeoAPI.get('/products?featured=true&limit=8');
+                if (data.products && data.products.length > 0) {
+                    grid.innerHTML = data.products.map(p => GeoUtils.renderProductCard(p)).join('');
+                    GeoScroll.init();
+                } else {
+                    grid.innerHTML = '<p class="text-center text-muted" style="grid-column:1/-1;padding:60px 0;">Nenhum produto em destaque de momento.</p>';
+                }
+            } catch (err) {
+                console.error('Error loading featured products:', err);
+                grid.innerHTML = '<p class="text-center text-muted" style="grid-column:1/-1;padding:60px 0;">Não foi possível carregar os produtos.</p>';
+            }
+        }
+
+        // ── Load Reviews from API ──
+        async function loadReviews() {
+            const col1 = document.getElementById('marquee-col1');
+            const col2 = document.getElementById('marquee-col2');
+            if (!col1 || !col2) return;
+
+            try {
+                let reviews = await GeoAPI.get('/reviews');
+
+                // Fallback to generic reviews if less than 4 exist to ensure marquee has enough content to scroll
+                if (!reviews || reviews.length < 4) {
+                    reviews = [
+                        { customer_name: 'Mauro Silva', rating: 5, comment: 'Entrega muito rápida para Luanda Sul. Recomendo, os ténis são originais.' },
+                        { customer_name: 'Ana Bela', rating: 5, comment: 'A primeira vez que comprei estava desconfiada, mas agora sou cliente fiel! Atendimento 5 estrelas.' },
+                        { customer_name: 'Rui Fernando', rating: 4, comment: 'Ténis Jordan de alta qualidade. Tive um pequeno atraso de 1 dia na entrega, mas avisaram-me com antecedência.' },
+                        { customer_name: 'Carolina M.', rating: 5, comment: 'Os sneakers chegaram impecáveis, tamanho certo e caixa sem amassos. Voltarei a encomendar.' },
+                        { customer_name: 'Edison K.', rating: 5, comment: 'Sistematização do site tá top. Facilita muito comprar assim e o Air Force é garantido original.' },
+                        { customer_name: 'Lara D.', rating: 5, comment: 'Obrigada GEOSSTORE, melhor loja de momento em Angola, atendimento top por JS!' },
+                        ...reviews // push real reviews on top
+                    ];
+                }
+
+                // Render function
+                const renderCard = (r) => `
+                    <div class="review-card" style="background:var(--white);border:1px solid var(--border-light);border-radius:var(--radius-lg);padding:24px;width:100%;">
+                        <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;">
+                            <div style="width:40px;height:40px;border-radius:50%;background:var(--black);color:var(--white);display:flex;align-items:center;justify-content:center;font-weight:600;font-size:1rem;">${r.customer_name.charAt(0)}</div>
+                            <div>
+                                <div style="font-weight:600;font-size:0.9rem;">${r.customer_name}</div>
+                                <div style="color:var(--text-muted);font-size:0.75rem;">Cliente Verificado</div>
+                            </div>
+                        </div>
+                        <div style="margin-bottom:12px;color:#f9a825;font-size:0.85rem;">${'★'.repeat(r.rating)}${'☆'.repeat(5 - r.rating)}</div>
+                        <p style="font-size:0.9rem;line-height:1.6;color:var(--text-secondary);">"${r.comment}"</p>
+                    </div>
+                `;
+
+                col1.innerHTML = '';
+                col2.innerHTML = '';
+
+                let flip = true;
+                reviews.forEach(r => {
+                    const cardHTML = renderCard(r);
+                    if (flip) col1.innerHTML += cardHTML;
+                    else col2.innerHTML += cardHTML;
+                    flip = !flip;
+                });
+
+                // Duplicate content to ensure infinite scroll is seamless
+                reviews.forEach(r => {
+                    const cardHTML = renderCard(r);
+                    if (flip) col1.innerHTML += cardHTML;
+                    else col2.innerHTML += cardHTML;
+                    flip = !flip;
+                });
+
+            } catch (err) {
+                console.error('Error loading reviews:', err);
+                col1.innerHTML = '<p class="text-center text-muted" style="padding:40px;">Não foi possível carregar as avaliações.</p>';
+            }
+        }
+
+        // ── Newsletter form ──
+        document.getElementById('newsletter-form')?.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = e.target.querySelector('input').value;
+            if (email) {
+                try {
+                    await GeoAPI.post('/newsletter', { email });
+                    GeoToast.show('Inscrição realizada com sucesso!', 'success');
+                    e.target.reset();
+                } catch (err) {
+                    GeoToast.show('Erro ao inscrever. Tente novamente.', 'error');
+                }
+            }
+        });
+
+        // Category cards hover
+        document.querySelectorAll('.category-card').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.transform = 'translateY(-6px)';
+                card.style.boxShadow = 'var(--shadow-xl)';
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = '';
+                card.style.boxShadow = '';
+            });
+        });
+
+        // Init
+        loadFeaturedProducts();
+        loadReviews();
+    </script>
+
+</body>
+
+</html>
